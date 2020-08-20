@@ -72,7 +72,6 @@ function saveButtonClicked(event){
   const assignedTo = taskAssignedTo.value;
   const date = taskDueDate.value;
   const time = taskDueTime.value;
-  // const priority = selectedPriority();
   const status = selectedStatus();
 
   if(validationTaskForm(title,description,assignedTo, date, status)){
@@ -341,6 +340,36 @@ function addTaskToPage(task){
     $('[data-toggle="tooltip"]').tooltip()
   });
 }
+
+var d = new Date();
+
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+var day = weekday[d.getDay()];
+
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var todayMonth = months[d.getMonth()];
+
+const nth = function(n) {
+  if (n > 3 && n < 21) return 'th';
+  switch (n % 10) {
+    case 1:  return "st";
+    case 2:  return "nd";
+    case 3:  return "rd";
+    default: return "th";
+  }
+}
+
+var todayDate = d.getDate();
+var year = d.getFullYear();
+var todayFullDate = todayDate + nth(d.getMonth()) + " " + todayMonth + " " + year + " - Happy " + day + "!";
+document.querySelector("#todayDate").innerHTML = todayFullDate;
 
 addTask("Scrum Meeting",
 `Daily Scrum Meeting with the Development Team`,
