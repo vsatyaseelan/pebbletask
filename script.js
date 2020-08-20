@@ -265,11 +265,11 @@ function addTaskToPage(task){
           ${task.date} - ${task.time}
         </li>
           
-        <li class="order-4 order-lg-4 order-md-4 order-sm-4 text-center">
+        <li class="order-4 order-lg-4 order-md-4 order-sm-4 text-left">
             <i class="icon fas fa-tag ${task.status}" data-toggle="tooltip" data-placement="top" title="Status"></i>
           </li>
         
-          <li class="order-5 order-lg-5 order-md-5 order-sm-5 text-sm-center text-right">
+          <li class="order-5 order-lg-5 order-md-5 order-sm-5 text-right">
           ${task.assignedTo}
           </li>
         

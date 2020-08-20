@@ -3,7 +3,7 @@
 #intro {
   width: 100%;
   position: relative;
-  background: url("./images/intro-bg.png") center bottom no-repeat;
+  /* background: url("./images/intro-bg.png") center bottom no-repeat; */
   background-size: cover;
   padding: 100px 0 120px 0;
 }
