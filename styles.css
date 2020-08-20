@@ -129,6 +129,18 @@ h1 {
   text-align: center;
 }
 
+.taskSummary {
+  list-style: none;
+  vertical-align: middle;
+  text-align: left;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
 #allEmptyError {
   text-align: center;
 }

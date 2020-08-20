@@ -116,13 +116,13 @@ formClose.addEventListener("click", function(event){
 function selectedStatus(){
 
   if (done.checked){
-    return done.value; // returns values of "status-done"
+    return done.value; // returns values of "Done"
   } else if (review.checked) {
-    return review.value; // returns value of "status-review"
+    return review.value; // returns value of "In Review"
   } else if (inProgress.checked) {
     return inProgress.value; // returns value of "status-InProgress"
   } else if (toDo.checked) {
-    return toDo.value; // returns value of "status-done"
+    return toDo.value; // returns value of "Done"
   } else {
     return false;
   }
@@ -204,25 +204,25 @@ function getAllTask(){
 // Counter for Done
 const counterDone = document.querySelector("#counterDone"); // assign Done button to counterDone variable
 counterDone.addEventListener("click", function(){ // onclick Done button
-  filterTaskStatus("status-done"); // clears innerHTML, display all tasks with status === done
+  filterTaskStatus("Done"); // clears innerHTML, display all tasks with status === done
 });
 
 // Counter for Review
 const counterInReview = document.querySelector("#counterInReview"); // assign In Review button to counterInReview variable
 counterInReview.addEventListener("click", function(){ // onclick In Review button
-  filterTaskStatus("status-review"); // clears innerHTML, display all tasks with status === review
+  filterTaskStatus("In Review"); // clears innerHTML, display all tasks with status === review
 });
 
 // Counter for In Progress
 const counterInProgress = document.querySelector("#counterInProgress"); // assign In Progress button to counterInProgress variable
 counterInProgress.addEventListener("click", function(){ // onclick In Progress button
-  filterTaskStatus("status-inProgress"); // clears innerHTML, display all tasks with status === inProgress
+  filterTaskStatus("In Progress"); // clears innerHTML, display all tasks with status === inProgress
 });
 
 // Counter for To Do
 const counterToDo = document.querySelector("#counterToDo"); // assign To Do button to counterToDo variable
 counterToDo.addEventListener("click", function(){ // onclick To Do button
-  filterTaskStatus("status-toDo"); // clears innerHTML, display all tasks with status === To Do
+  filterTaskStatus("To Do"); // clears innerHTML, display all tasks with status === To Do
 });
 
 
@@ -245,10 +245,10 @@ function deleteTask(task){
 
 function statusStats(){
   totalNumber.innerHTML = `${tasks.length}`; // gets total tasks in the array
-  counterDone.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-done").length}`; // done status counter
-  counterInReview.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-review").length}`; // in review status counter
-  counterInProgress.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-inProgress").length}`; // in progress status counter
-  counterToDo.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-toDo").length}`; // to do status counter
+  counterDone.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "Done").length}`; // done status counter
+  counterInReview.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "In Review").length}`; // in review status counter
+  counterInProgress.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "In Progress").length}`; // in progress status counter
+  counterToDo.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "To Do").length}`; // to do status counter
 }
 
 function editTask(task){
@@ -275,31 +275,32 @@ function addTaskToPage(task){  // adds HTML element to the page
 
   <div class="task" id="task${task.id}">
     <div class="row">
-      <div class="taskTitle col-lg-6 order-1 order-lg-1 order-md-1 order-sm-1">
+      <div class="taskTitle col-lg-5 order-1 order-lg-1 order-md-1 order-sm-1">
         
           <p class="text-left d-inline"><span class="h6 font-weight-bold">${task.title}</span> 
-          <a href="#task${task.id}Description" class="text-secondary icon ml-0 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle"></i></a></p>
+          <a href="#task${task.id}Description" class="text-primary icon ml-0 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle"></i></a></p>
       </div>
-      <div class="col-lg-6 order-2 order-lg-2 order-md-2 order-sm-2">
+      
+      <div class="col-lg-7 order-2 order-lg-2 order-md-2 order-sm-2">
         
-      <ul class="row taskSummary justify-content-around">
+      <ul class="row taskSummary">
         
-        <li class="order-3 order-lg-3 order-md-3 order-sm-3 text-sm-right">
-          ${task.date} - ${task.time}
+      <li class="order-3 order-lg-3 order-md-3 order-sm-3">
+          <span>${task.date} - ${task.time}</span>
         </li>
           
-        <li class="order-4 order-lg-4 order-md-4 order-sm-4 text-left">
-            <i class="icon fas fa-tag ${task.status}" data-toggle="tooltip" data-placement="top" title="Status"></i>
+        <li class="order-4 order-lg-4 order-md-4 order-sm-4">
+        <span class="badge badge-dark">${task.status}</span>
           </li>
         
-          <li class="order-5 order-lg-5 order-md-5 order-sm-5 text-right">
+          <li class="order-5 order-lg-5 order-md-5 order-sm-5">
           ${task.assignedTo}
           </li>
         
-          <li class="order-6 order-lg-6 order-md-6 order-sm-6 text-right">
+          <li class="order-6 order-lg-6 order-md-6 order-sm-6">
           <form class="removeBin" action="" method="post">
           <a href="#newTaskInput" id="editTaskButton" role=button class="d-inline btn btn-link col-2 ml-0 pl-0 mb-0 pb-0" data-toggle="modal" data-target="#newTaskInput">
-          <i class="fas fa-pen-square"></i></a>
+          <i class="fas fa-pen-square text-dark"></i></a>
               <input type="checkbox" class="ml-3 pl-0 border border-info">
               <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask"><i class="icon fas fa-trash-alt"></i></button>
               </form>
@@ -329,11 +330,11 @@ function addTaskToPage(task){  // adds HTML element to the page
     taskDueTime.value =task.time; // task time assigned to taskDueTime.value
     
     switch (task.status) { // checks if the task status matches with the case, if not default is selected
-      case 'status-done': done.checked = true;
+      case 'Done': done.checked = true;
       break;
-      case 'status-review': review.checked  = true;
+      case 'In Review': review.checked  = true;
       break;
-      case 'status-inProgress': inProgress.checked  = true;
+      case 'In Progress': inProgress.checked  = true;
       break;
       default: toDo.checked  = true; // by default, To Do is selected 
     }
@@ -392,7 +393,7 @@ const nth = function(n) { // displays *st, *nd, *rd, *th depending on the date
 
 var todayDate = d.getDate();
 var year = d.getFullYear();
-var todayFullDate = todayDate + nth(d.getMonth()) + " " + todayMonth + " " + year + " - Happy " + day + "!";
+var todayFullDate = todayDate + nth(todayDate) + " " + todayMonth + " " + year + " - Happy " + day + "!";
 document.querySelector("#todayDate").innerHTML = todayFullDate;
 
 // Sample data for testing
@@ -402,25 +403,25 @@ addTask("Scrum Meeting",
 "Dominic Leightonfield",
 "2020-08-31",
 "05:15",
-"status-done");
+"Done");
 
 addTask("Task Planning",
 `Task Planning Meeting with the Planning Team`,
 "Alvin Anderson",
 "2020-09-06",
 "02:05",
-"status-review");
+"In Review");
 
 addTask("UX/UI Design Final",
 `Final meeting for UX/UI Design`,
 "Billy Cunningham",
 "2020-09-15",
 "07:30",
-"status-inProgress");
+"In Progress");
 
 addTask("End of Sprint Meeting",
 `Meeting Team and Product Owner`,
 "Wendy Jane",
 "2020-10-07",
 "09:45",
-"status-toDo");
+"To Do");
