@@ -9,12 +9,6 @@ const taskAssignedTo = document.querySelector('#taskAssignedTo');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDueTime = document.querySelector('#taskDueTime');
 
-//Priority
-// const high = document.querySelector('#highPriority');
-// const medium = document.querySelector('#mediumPriority');
-// const low = document.querySelector('#lowPriority');
-// const no = document.querySelector('#noPriority');
-
 //Status
 const done = document.querySelector('#statusDone');
 const review = document.querySelector('#statusReview');
@@ -45,10 +39,7 @@ function clearAllFieldValues(){
   taskAssignedTo.value = null;
   taskDueDate.value = null;
   taskDueTime.value = null;
-  // high.checked = false;
-  // medium.checked = false;
-  // low.checked = false;
-  // no.checked = false;
+  
   done.checked = false;
   review.checked = false;
   inProgress.checked = false;
@@ -113,20 +104,6 @@ formClose.addEventListener("click", function(event){
   taskForm.classList.remove(`${id}`);
   }
 });
-
-// Priority return
-// function selectedPriority(){
-
-//   if (high.checked){
-//     return high.value;
-//   }else if (medium.checked) {
-//     return medium.value;
-//   } else if (low.checked) {
-//     return low.value;
-//   } else {
-//     return no.value;
-//   }
-// }
 
 // Status return
 
@@ -281,7 +258,8 @@ function addTaskToPage(task){
           <a href="#task${task.id}Description" class="text-secondary icon ml-0 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle"></i></a></p>
       </div>
       <div class="col-lg-6 order-2 order-lg-2 order-md-2 order-sm-2">
-        <ul class="row taskSummary justify-content-around">
+        
+      <ul class="row taskSummary justify-content-around">
         
         <li class="order-3 order-lg-3 order-md-3 order-sm-3 text-sm-right">
           ${task.date} - ${task.time}
@@ -366,28 +344,28 @@ function addTaskToPage(task){
 
 addTask("Scrum Meeting",
 `Daily Scrum Meeting with the Development Team`,
-"Satyaseelan",
-"2020-09-30",
-"02:05",
+"Dominic Leightonfield",
+"2020-08-31",
+"05:15",
 "status-done");
 
-addTask("Scrum Meeting",
-`Daily Scrum Meeting with the Development Team`,
-"Satyaseelan",
-"2020-09-30",
+addTask("Task Planning",
+`Task Planning Meeting with the Planning Team`,
+"Alvin Anderson",
+"2020-09-06",
 "02:05",
 "status-review");
 
-addTask("Scrum Meeting",
-`Daily Scrum Meeting with the Development Team`,
-"Satyaseelan",
-"2020-09-30",
-"02:05",
+addTask("UX/UI Design Final",
+`Final meeting for UX/UI Design`,
+"Billy Cunningham",
+"2020-09-15",
+"07:30",
 "status-inProgress");
 
-addTask("Scrum Meeting",
-`Daily Scrum Meeting with the Development Team`,
-"Satyaseelan",
-"2020-09-30",
-"02:05",
+addTask("End of Sprint Meeting",
+`Meeting Team and Product Owner`,
+"Wendy Jane",
+"2020-10-07",
+"09:45",
 "status-toDo");
