@@ -219,7 +219,7 @@ footer {
      align-items: center;
    }
 
-  .bin {
+  .removeBin {
     display:flex;
     justify-content: flex-end;
     align-items: center;

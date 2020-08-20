@@ -94,18 +94,20 @@ function addTask(title,description,assignedTo, date, time,status){ // take all i
   statusStats() // updates status counter
 }
 
-const formCancel=document.querySelector("#cancelButton");
-const formClose=document.querySelector("#close");
+const formCancel=document.querySelector("#cancelButton"); // assign modal cancel button to the variable
+const formClose=document.querySelector("#close"); // assign modal close button to the variable
+
 formCancel.addEventListener("click", function(event){
-  const id = taskForm.classList.item(0);
+  const id = taskForm.classList.item(0); // assign array index to the modal
   if (id){
-  taskForm.classList.remove(`${id}`);
+  taskForm.classList.remove(`${id}`); // remove the id class from the modal
   }
 });
+
 formClose.addEventListener("click", function(event){
-  const id = taskForm.classList.item(0);
+  const id = taskForm.classList.item(0); // assign array index to the modal
   if (id){
-  taskForm.classList.remove(`${id}`);
+  taskForm.classList.remove(`${id}`); // remove the id class from the modal
   }
 });
 
@@ -114,31 +116,40 @@ formClose.addEventListener("click", function(event){
 function selectedStatus(){
 
   if (done.checked){
-    return done.value;
+    return done.value; // returns values of "status-done"
   } else if (review.checked) {
-    return review.value;
+    return review.value; // returns value of "status-review"
   } else if (inProgress.checked) {
-    return inProgress.value;
+    return inProgress.value; // returns value of "status-InProgress"
   } else if (toDo.checked) {
-    return toDo.value;
+    return toDo.value; // returns value of "status-done"
   } else {
     return false;
   }
 }
 
-taskTitle.addEventListener("input", function(event){
+//  Validation on input for boolean and assign class accordingly (is-invalid // is-valid)
+
+// checks if the title is more than 8 characters
+taskTitle.addEventListener("input", function(event){ 
   validation(notEmptyLongerThan(8));
 });
+
+// checks if the task description is more than 15 characters
 taskDescription.addEventListener("input", function(event){
   validation(notEmptyLongerThan(15));
 });
+
+// checks if the assigned to is more than 8 characters
 taskAssignedTo.addEventListener("input", function(event){
   validation(notEmptyLongerThan(8));
 });
+
+// checks if the due date is in the future
 taskDueDate.addEventListener("input", function(event){
-  const today = todayConvertor();
-  const dueDate = new Date(event.target.value);
-  validation(today <= dueDate);
+  const today = todayConvertor(); // get today's date
+  const dueDate = new Date(event.target.value); // get due date
+  validation(today <= dueDate); // returns value of boolean and assign class
 })
 
 // returns today's date with hours
@@ -147,17 +158,18 @@ function todayConvertor(){
   return today.setHours(0,0,0,0); // get current time
 }
 
-
+// validations boolean and remove/add class to element accordingly
 function validation(boolean){
   if(boolean){
-    event.target.classList.remove("is-invalid");
-    event.target.classList.add("is-valid");
+    event.target.classList.remove("is-invalid"); // remove class from element
+    event.target.classList.add("is-valid"); // add class to element
   } else {
-    event.target.classList.remove("is-valid");
-    event.target.classList.add("is-invalid");
+    event.target.classList.remove("is-valid"); // remove class from element
+    event.target.classList.add("is-invalid"); // add class to elements
   }
 };
 
+//validation to check if value and length of characters are more than the (number)
 function notEmptyLongerThan (number){
   return event.target.value && event.target.value.length > number;
 }
@@ -180,54 +192,55 @@ function validationTaskForm(title, description, assignedTo, date, status){
 }
 
 // Total Counter - All Task
-const counterTotalTask = document.querySelector("#counterTotalTask");
-const totalNumber = document.querySelector("#counterTotalTask > span");
-counterTotalTask.addEventListener("click", getAllTask);
+const counterTotalTask = document.querySelector("#counterTotalTask"); // assign All Tasks button to counterTotalTask
+const totalNumber = document.querySelector("#counterTotalTask > span"); // assign span inside All Task Counter to totalNumber
+counterTotalTask.addEventListener("click", getAllTask); // onclick of All Tasks button
 function getAllTask(){
-  clearAll();
-  tasks.forEach(task => addTaskToPage(task));
-  totalNumber.innerHTML = `${tasks.length}`;
+  clearAll(); // clears innerHTML 
+  tasks.forEach(task => addTaskToPage(task)); // displays each task from the array
+  totalNumber.innerHTML = `${tasks.length}`; // All Tasks total number is the length of the array
 }
 
 // Counter for Done
-const counterDone = document.querySelector("#counterDone");
-counterDone.addEventListener("click", function(){
-  getTasksWithStatus("status-done");
+const counterDone = document.querySelector("#counterDone"); // assign Done button to counterDone variable
+counterDone.addEventListener("click", function(){ // onclick Done button
+  filterTaskStatus("status-done"); // clears innerHTML, display all tasks with status === done
 });
 
 // Counter for Review
-const counterInReview = document.querySelector("#counterInReview");
-counterInReview.addEventListener("click", function(){
-  getTasksWithStatus("status-review");
+const counterInReview = document.querySelector("#counterInReview"); // assign In Review button to counterInReview variable
+counterInReview.addEventListener("click", function(){ // onclick In Review button
+  filterTaskStatus("status-review"); // clears innerHTML, display all tasks with status === review
 });
 
 // Counter for In Progress
-const counterInProgress = document.querySelector("#counterInProgress");
-counterInProgress.addEventListener("click", function(){
-  getTasksWithStatus("status-inProgress");
+const counterInProgress = document.querySelector("#counterInProgress"); // assign In Progress button to counterInProgress variable
+counterInProgress.addEventListener("click", function(){ // onclick In Progress button
+  filterTaskStatus("status-inProgress"); // clears innerHTML, display all tasks with status === inProgress
 });
 
 // Counter for To Do
-const counterToDo = document.querySelector("#counterToDo");
-counterToDo.addEventListener("click", function(){
-  getTasksWithStatus("status-toDo");
+const counterToDo = document.querySelector("#counterToDo"); // assign To Do button to counterToDo variable
+counterToDo.addEventListener("click", function(){ // onclick To Do button
+  filterTaskStatus("status-toDo"); // clears innerHTML, display all tasks with status === To Do
 });
 
 
-function getTasksWithStatus(status){
-  clearAll();
-
-  tasks.forEach(function (task){
+function filterTaskStatus(status){
+  clearAll(); // clears innerHTML
+  tasks.forEach(function (task){ // display all task when passed parameter matches the status in the array
     if (status === task.status){addTaskToPage(task)};
   });
 }
-const findTaskIndex = (task) => tasks.findIndex(taskInArray => (taskInArray.id == task.id));
+
+const findTaskIndex = (task) => // finding index of a task
+  tasks.findIndex(taskInArray => (taskInArray.id == task.id)); // returns the first index that matches the parameter
 
 function deleteTask(task){
   let taskIndex = findTaskIndex(task);
-  tasks.splice(taskIndex,1);
-  refreshPage();
-  statusStats();
+  tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
+  refreshPage(); // clear innerHTML and creates a list of all the items in the array
+  statusStats(); // update status counter buttons
 }
 
 function statusStats(){
@@ -239,11 +252,11 @@ function statusStats(){
 }
 
 function editTask(task){
-  tasks.splice(findTaskIndex(task),1,task);
-  refreshPage();
-  clearAllFieldValues();
-  clearValidations();
-  statusStats();
+  tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
+  refreshPage(); // clear innerHTML and add the updated array
+  clearAllFieldValues(); // clear all field value and make modal empty
+  clearValidations(); // clears all validation classes and span
+  statusStats(); // update status counter button on HTML
 }
 
 function refreshPage(){
@@ -257,6 +270,7 @@ function clearAll(){
 
 function addTaskToPage(task){  // adds HTML element to the page
 
+  // assign all the HTML Element code to html
   const html = `
 
   <div class="task" id="task${task.id}">
@@ -283,11 +297,11 @@ function addTaskToPage(task){  // adds HTML element to the page
           </li>
         
           <li class="order-6 order-lg-6 order-md-6 order-sm-6 text-right">
-          <form class="bin" action="" method="post">
+          <form class="removeBin" action="" method="post">
           <a href="#newTaskInput" id="editTaskButton" role=button class="d-inline btn btn-link col-2 ml-0 pl-0 mb-0 pb-0" data-toggle="modal" data-target="#newTaskInput">
           <i class="fas fa-pen-square"></i></a>
               <input type="checkbox" class="ml-3 pl-0 border border-info">
-              <button type="button" class="ml-3 pl-0 btn btn-link bin" id="deleteSingleTask"><i class="icon fas fa-trash-alt"></i></button>
+              <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask"><i class="icon fas fa-trash-alt"></i></button>
               </form>
           </li>
 
@@ -300,60 +314,60 @@ function addTaskToPage(task){  // adds HTML element to the page
     <hr>
   </div>`;
   
- const taskElement = document.createRange().createContextualFragment(html);
- const editTaskOnPage = taskElement.querySelector("#editTaskButton");
-  editTaskOnPage.addEventListener("click", function(){
-    clearAllFieldValues();
-    clearValidations();
-    taskForm.classList.add(task.id);
-    taskTitle.value=task.title;
-    taskDescription.value = task.description;
-    taskAssignedTo.value = task.assignedTo;
-    taskDueDate.value = task.date;
-    taskDueTime.value =task.time;
+ const taskElement = document.createRange().createContextualFragment(html); // passing html fragment to the page
+ 
+ 
+ const editTaskOnPage = taskElement.querySelector("#editTaskButton"); // assign Edit Task button to to a variable
+  editTaskOnPage.addEventListener("click", function(){ // onclick of edit task button
+    clearAllFieldValues(); // clear all field values from modal form
+    clearValidations(); // clear all validation spans
+    taskForm.classList.add(task.id); // task form class added with the task id index
+    taskTitle.value=task.title; // task title assigned to taskTitle.value
+    taskDescription.value = task.description; // task description assigned to taskAssigned.value
+    taskAssignedTo.value = task.assignedTo; // task assignedTo assigned to taskAssignedTo.value
+    taskDueDate.value = task.date; // task date assigned to taskDueDate.value
+    taskDueTime.value =task.time; // task time assigned to taskDueTime.value
     
-    switch (task.status) {
-      case 'status-done':
-      done.checked = true;
+    switch (task.status) { // checks if the task status matches with the case, if not default is selected
+      case 'status-done': done.checked = true;
       break;
-      case 'status-review':
-      review.checked  = true;
+      case 'status-review': review.checked  = true;
       break;
-      case 'status-inProgress':
-      inProgress.checked  = true;
+      case 'status-inProgress': inProgress.checked  = true;
       break;
-      default:
-      toDo.checked  = true;
+      default: toDo.checked  = true; // by default, To Do is selected 
     }
   });
 
-  const deleteTaskOnPage = taskElement.querySelector('#deleteSingleTask');
-  deleteTaskOnPage.addEventListener("click", function(){
-    deleteTask(task);
-    deleteTaskOnPage.closest("div.task").remove();
+  const deleteTaskOnPage = taskElement.querySelector('#deleteSingleTask'); // deletes single task on the page
+  deleteTaskOnPage.addEventListener("click", function(){ // onclick of the delete single task icon
+    deleteTask(task); // deletes the task of the given index
+    deleteTaskOnPage.closest("div.task").remove(); // removes closed div in the task class
   });
 
-  const checkbox = taskElement.querySelector('.bin > input[type="checkbox"]');
-  const clearSelected = document.querySelector("#clearSelected");
-  clearSelected.addEventListener('click', checkboxClicked);
 
-  function checkboxClicked (event){
-       if (checkbox.checked){
-         deleteTask(task);
-          checkbox.closest("div.task").remove();
-          clearSelected.removeEventListener('click', checkboxClicked);
+
+  const checkbox = taskElement.querySelector('.removeBin > input[type="checkbox"]'); // assign checkbox in the removeBin class to checkbox variable
+  const clearSelected = document.querySelector("#clearSelected"); // assign Clear Selected button to clearSelected
+  clearSelected.addEventListener('click', checkboxClicked); // onclick of clear selected button, executed checkboxClicked function
+
+  function checkboxClicked (event){ // executed on Clear Selectd button onclick
+       if (checkbox.checked){ // if the checkbox is checked
+         deleteTask(task); // deletes the task of the given index
+          checkbox.closest("div.task").remove(); // removes the closes div in the task class
+          clearSelected.removeEventListener('click', checkboxClicked); // removes previously registered event listener
            }
          }
          
-  taskContainer.append(taskElement);
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  });
+  taskContainer.append(taskElement); // append taskElement to the taskContainer in the HTML page
+  
 }
 
-var d = new Date();
 
-var weekday = new Array(7);
+// Day and Date
+var d = new Date(); // get the system date and store in variable
+
+var weekday = new Array(7); // store 7 days of a week in an array
 weekday[0] = "Sunday";
 weekday[1] = "Monday";
 weekday[2] = "Tuesday";
@@ -361,12 +375,12 @@ weekday[3] = "Wednesday";
 weekday[4] = "Thursday";
 weekday[5] = "Friday";
 weekday[6] = "Saturday";
-var day = weekday[d.getDay()];
+var day = weekday[d.getDay()]; // get current day
 
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var todayMonth = months[d.getMonth()];
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; // store months in an array
+var todayMonth = months[d.getMonth()]; // get current month
 
-const nth = function(n) {
+const nth = function(n) { // displays *st, *nd, *rd, *th depending on the date
   if (n > 3 && n < 21) return 'th';
   switch (n % 10) {
     case 1:  return "st";
@@ -380,6 +394,8 @@ var todayDate = d.getDate();
 var year = d.getFullYear();
 var todayFullDate = todayDate + nth(d.getMonth()) + " " + todayMonth + " " + year + " - Happy " + day + "!";
 document.querySelector("#todayDate").innerHTML = todayFullDate;
+
+// Sample data for testing
 
 addTask("Scrum Meeting",
 `Daily Scrum Meeting with the Development Team`,
