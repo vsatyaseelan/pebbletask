@@ -2,38 +2,41 @@
 const tasks=[];
 let taskId = 0;
 
-//taskDetails
+// Input fields in the new task modal
 const taskTitle = document.querySelector('#taskTitle');
 const taskDescription = document.querySelector('#taskDescription');
 const taskAssignedTo = document.querySelector('#taskAssignedTo');
 const taskDueDate = document.querySelector('#taskDueDate');
 const taskDueTime = document.querySelector('#taskDueTime');
 
-//Status
-const done = document.querySelector('#statusDone');
-const review = document.querySelector('#statusReview');
-const inProgress = document.querySelector('#statusInProgress');
-const toDo = document.querySelector('#statusToDo');
-const newToDo = document.querySelector("#newToDo");
-const openNewTask = document.querySelector("#openForm");
-const taskForm = document.querySelector("#taskForm");
+//Status radio button
+const done = document.querySelector('#statusDone'); // Done
+const review = document.querySelector('#statusReview'); // Review
+const inProgress = document.querySelector('#statusInProgress'); // In Progress
+const toDo = document.querySelector('#statusToDo'); // To Do
 
-const taskContainer = document.querySelector("#tasks");
-const taskModalSaveButton = document.querySelector("#taskForm");
+const newToDo = document.querySelector("#newToDo"); // input box for new task
+const openNewTask = document.querySelector("#openForm"); // add task button to open new task form
+const taskForm = document.querySelector("#taskForm"); // new task form
 
-openNewTask.addEventListener("click", function(event){
-  clearAllFieldValues();
-  clearValidations();
-  taskTitle.value = newToDo.value;
+const taskContainer = document.querySelector("#tasks"); // container to display tasks
+const taskModalForm = document.querySelector("#taskForm"); // new task form
+
+
+// New Task Input Box
+openNewTask.addEventListener("click", function(event){ // add button clicked
+  clearAllFieldValues(); // all fields are cleared to null and radio button false
+  clearValidations(); // validation span cleared from the form
+  taskTitle.value = newToDo.value; // value from input box passed to new task title
   if(taskTitle.value && taskTitle.value.length > 8){
-    taskTitle.classList.add("is-valid");
+    taskTitle.classList.add("is-valid"); // if task title is more than 8 characters, is-valid class assigned
   } else {
-    taskTitle.classList.add("is-invalid");
+    taskTitle.classList.add("is-invalid"); // else task title is-invalid is assigned
   }
-  newToDo.value = null;
+  newToDo.value = null; //input box becomes null
 });
 
-function clearAllFieldValues(){
+function clearAllFieldValues(){ // clears all fields value and assigned false (fresh)
   taskTitle.value = null;
   taskDescription.value = null;
   taskAssignedTo.value = null;
@@ -45,7 +48,8 @@ function clearAllFieldValues(){
   inProgress.checked = false;
   toDo.checked = false;
 }
-function clearValidations(){
+
+function clearValidations(){ // removes both is-invalid and is-valid class from all the fields
   taskTitle.classList.remove("is-invalid", "is-valid");
   taskDescription.classList.remove("is-invalid", "is-valid");
   taskAssignedTo.classList.remove("is-invalid", "is-valid");
@@ -53,40 +57,41 @@ function clearValidations(){
 }
 
 
-taskModalSaveButton.addEventListener("submit",saveButtonClicked);
-
-function addTask(title,description,assignedTo, date, time,status){
-  taskId++;
-  const task = {title,description,assignedTo, date, time, status, id:taskId};
-  tasks.push(task);
-  refreshPage();
-  clearAllFieldValues();
-  clearValidations();
-  statusStats()
-}
+taskModalForm.addEventListener("submit", saveButtonClicked); // on clicking submit button on the new task form, saveButtonClicked function called
 
 function saveButtonClicked(event){
-  event.preventDefault();
-  const title = taskTitle.value;
+  event.preventDefault(); // prevent default action for the submit button to trigger
+  const title = taskTitle.value; // assign values from input box to the array
   const description = taskDescription.value;
   const assignedTo = taskAssignedTo.value;
   const date = taskDueDate.value;
   const time = taskDueTime.value;
-  const status = selectedStatus();
+  const status = selectedStatus(); // returns value for the radio button depending on the selection
 
-  if(validationTaskForm(title,description,assignedTo, date, status)){
-    if(!taskForm.classList.item(0)){
-    addTask(title,description,assignedTo, date, time, status);
+  if(validationTaskForm(title, description, assignedTo, date, status)){ // check all parameters passed to this function
+    if(!taskForm.classList.item(0)){ // if index does not match, go to add task
+    addTask(title,description,assignedTo, date, time, status); // add task function
     } else {
-    const id = taskForm.classList.item(0);
+    const id = taskForm.classList.item(0); // assigns array position 0 to the id (id=0)
     const task = {title, description, assignedTo, date, time, status, id};
-    editTask(task);
-    taskForm.classList.remove(`${id}`);
+    editTask(task); // if index match, go to edit task
+    taskForm.classList.remove(`${id}`); // removed the class if from the task form
     }
-    $("#newTaskInput").modal("hide");
+    $("#newTaskInput").modal("hide"); // new task modal hidden
   }  else {
-    alert("Please complete all fields.");
+    alert("Please complete all fields."); // else alert to complete all fields
   }
+}
+
+// Add task function
+function addTask(title,description,assignedTo, date, time,status){ // take all input fields parameters
+  taskId++; // generated id = id + 1
+  const task = {title,description,assignedTo, date, time, status, id:taskId}; // assign all values including id to task
+  tasks.push(task); // push task to the tasks array
+  refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+  clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+  clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+  statusStats() // updates status counter
 }
 
 const formCancel=document.querySelector("#cancelButton");
@@ -122,13 +127,13 @@ function selectedStatus(){
 }
 
 taskTitle.addEventListener("input", function(event){
-  validation(notEmptyandLongerThan(8));
+  validation(notEmptyLongerThan(8));
 });
 taskDescription.addEventListener("input", function(event){
-  validation(notEmptyandLongerThan(15));
+  validation(notEmptyLongerThan(15));
 });
 taskAssignedTo.addEventListener("input", function(event){
-  validation(notEmptyandLongerThan(8));
+  validation(notEmptyLongerThan(8));
 });
 taskDueDate.addEventListener("input", function(event){
   const today = todayConvertor();
@@ -136,9 +141,10 @@ taskDueDate.addEventListener("input", function(event){
   validation(today <= dueDate);
 })
 
+// returns today's date with hours
 function todayConvertor(){
-  const today = new Date();
-  return today.setHours(0,0,0,0);
+  const today = new Date(); // get today's date 
+  return today.setHours(0,0,0,0); // get current time
 }
 
 
@@ -151,24 +157,26 @@ function validation(boolean){
     event.target.classList.add("is-invalid");
   }
 };
-function notEmptyandLongerThan (number){
+
+function notEmptyLongerThan (number){
   return event.target.value && event.target.value.length > number;
 }
-function validationTaskForm(title,description,assignedTo, date, status){
-  const dueDate = new Date(date);
-  const today = todayConvertor();
-  if(title && title.length > 8){
-    if(description && description.length > 15){
-      if(assignedTo && assignedTo.length > 8){
-        if(dueDate && today <= dueDate ){
-            if(status){
-              return true;
-            }
+
+function validationTaskForm(title, description, assignedTo, date, status){
+  const dueDate = new Date(date); // assign today's date by default to calendar picker
+  const today = todayConvertor(); // assign current time by default
+  if(title && title.length > 8){  // if title length is more than 8 characters
+    if(description && description.length > 15){ // if description is more than 15 characters
+      if(assignedTo && assignedTo.length > 8){ // if assignedTo is more than 8 characters
+        if(dueDate && today <= dueDate ){ // **
+          if(status){ // if status is true
+            return true; // validationTaskForm returns true
+          }  
         }
       }
     }
   }
-  return false;
+  return false; // else return false
 }
 
 // Total Counter - All Task
@@ -221,13 +229,15 @@ function deleteTask(task){
   refreshPage();
   statusStats();
 }
+
 function statusStats(){
-  totalNumber.innerHTML = `${tasks.length}`;
-  counterDone.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-done").length}`;
-  counterInReview.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-review").length}`;
-  counterInProgress.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-inProgress").length}`;
-  counterToDo.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-toDo").length}`;
+  totalNumber.innerHTML = `${tasks.length}`; // gets total tasks in the array
+  counterDone.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-done").length}`; // done status counter
+  counterInReview.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-review").length}`; // in review status counter
+  counterInProgress.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-inProgress").length}`; // in progress status counter
+  counterToDo.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "status-toDo").length}`; // to do status counter
 }
+
 function editTask(task){
   tasks.splice(findTaskIndex(task),1,task);
   refreshPage();
@@ -237,15 +247,15 @@ function editTask(task){
 }
 
 function refreshPage(){
-  clearAll();
-  tasks.forEach(task => addTaskToPage(task));
+  clearAll();  // clear innerHTML
+  tasks.forEach(task => addTaskToPage(task)); // list all current tasks from array
 }
 
 function clearAll(){
-  taskContainer.innerHTML = "";
+  taskContainer.innerHTML = ""; // clears innerHTML
 }
 
-function addTaskToPage(task){
+function addTaskToPage(task){  // adds HTML element to the page
 
   const html = `
 
