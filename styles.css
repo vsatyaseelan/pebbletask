@@ -1,0 +1,268 @@
+/* # Intro Section */
+
+#intro {
+  width: 100%;
+  position: relative;
+  background: url("./images/intro-bg.png") center bottom no-repeat;
+  background-size: cover;
+  padding: 100px 0 120px 0;
+}
+
+@media (max-width: 991px) {
+  #intro {
+    padding: 140px 0 60px 0;
+  }
+}
+
+@media (max-width: 574px) {
+  #intro {
+    padding: 100px 0 20px 0;
+  }
+}
+
+#intro .intro-img {
+  width: 50%;
+  float: right;
+}
+
+@media (max-width: 991px) {
+  #intro .intro-img {
+    width: 80%;
+    float: none;
+    margin: 0 auto 25px auto;
+  }
+}
+
+#intro .intro-info {
+  width: 50%;
+  float: left;
+}
+
+@media (max-width: 991px) {
+  #intro .intro-info {
+    width: 80%;
+    float: none;
+    margin: auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  #intro .intro-info {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+#intro .intro-info h2 {
+  color: #fff;
+  margin-bottom: 40px;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+#intro .intro-info h2 span {
+  color: #74b5fc;
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  #intro .intro-info h2 {
+    font-size: 34px;
+    margin-bottom: 30px;  
+  }
+}
+
+#intro .intro-info .btn-top-new, #intro .intro-info .btn-top-view {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 32px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 0 20px 20px 0;
+  color: #fff;
+}
+
+#intro .intro-info .btn-top-new {
+  background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+#intro .intro-info .btn-top-new:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #007bff;
+  text-decoration: none;
+}
+
+#intro .intro-info .btn-top-view {
+  background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
+  border: 2px solid #fff;
+  color: #fff;}
+
+#intro .intro-info .btn-top-view:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #007bff;
+  text-decoration: none;
+}
+#newTask {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+h1 {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#allEmptyError {
+  text-align: center;
+}
+
+#buttonNewTask {
+  margin-top: 30px;
+}
+
+#todayTitle, #upcomingTitle {
+  font-weight: bold;
+  text-align: center;
+}
+
+.newTaskModalStyle {
+  margin-top: 20px;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+footer {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#newToDo {
+  font-size: 1rem;
+}
+
+
+/* Button Properties */
+.btnAddNewTask {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 0 20px 20px 0;
+  color: #fff;
+  background: #007bff;
+  border: 2px solid #ffffff;
+  color: #fff;
+  background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
+}
+
+/* Button Hover */
+.btnAddNewTask:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #6e00ff;
+  text-decoration: none;
+}
+
+.modal-header {
+  color: white;
+  background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
+  ;
+}
+
+.close {
+  color: white;
+}
+
+.validMessage {
+  font-size: 85%;
+}
+
+.inlineStyle{
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+  }
+  
+  .icon:hover {
+    opacity:70%;
+  }
+  .taskSummary {
+     display: flex;
+     list-style-type: none;
+     justify-content: space-around;
+     padding-left: 0;
+     align-items: center;
+   }
+
+  .bin {
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  #counterTotalTask, #counterToDo, #counterInProgress, #counterInReview, #counterDone {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin: 0 20px 20px 0;
+    color: #fff;
+    background: #007bff;
+    border: 2px solid #ffffff;
+  }
+
+  #counterTotalTask:hover, #counterToDo:hover, #counterInProgress:hover, #counterInReview:hover, #counterDone:hover {
+    background: #fff;
+    border-color: #007bff;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  /* .done{
+    background-color: rgba(40, 167, 69, 0.2)
+  }
+  .done-font{
+    color:rgba(40, 167, 69, 0.5);
+  }
+  .review{
+    background-color: rgba(23,162,184,0.2)
+  }
+  .review-font{
+    color: rgba(23,162,184,0.5)
+  }
+  .inProgress{
+    background-color: rgba(255,193,7, 0.2)
+  }
+  .inProgress-font{
+    color: rgba(255,193,7, 0.5)
+  }
+  .toDo{
+    background-color: rgba(220,53,69,0.2)
+  }
+  .toDo-font{
+    color: rgba(220,53,69,0.5)
+  }
+   */

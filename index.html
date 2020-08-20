@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+  <!-- Font File -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Icon File -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+ 
+  <link rel="stylesheet" href="./styles.css">
+  <title id="htmlTitle">Generation Task Planner</title>
+</head>
+
+<body class="container-fluid">
+  
+  <section id="intro" class="clearfix">
+    <div class="container" data-aos="fade-up">
+
+      <div class="intro-img" data-aos="zoom-out" data-aos-delay="200">
+        <img src="./images/intro-img.svg" alt="" class="img-fluid">
+      </div>
+      <div class="intro-info" data-aos="zoom-in" data-aos-delay="100">
+      <h2>Generation Task Planner for today's workplace</h2>
+      <div>
+          <a href="#newTask" class="btn-top-new scrollto">Add New Task</a>
+          <a href="#divTaskSummary" class="btn-top-view scrollto">View Tasks</a>
+        </div>
+      </div>
+      
+
+    </div>
+  </section> 
+
+        <div class="card-body mt-2 mb-2" id="divTodayTask">
+          <h5 class="card-title" id="todayTitle">20 August 2020, Wednesday</h5>
+        </div>
+  
+<!-- New Task Input Form -->
+<div class="container newTask" id="newTask">
+  <div class="form-group row justify-content-around border-bottom">
+    <input id="newToDo" type="text" class="form-control form-control-lg col-8 border-1 bg-light" placeholder="Enter new task here">
+    <a href="#newTaskInput" id ="openForm" role="button" class="btn btn-link col-3 btnAddNewTask btn-med" data-toggle="modal" data-target="#newTaskInput">Add</a>
+  </div>
+</div>
+
+        <!-- Task Counter -->
+  <div class="mt-1 pt-1 mx-auto px-auto" id="divTaskSummary">
+    <header class="container m-auto p-auto">
+      <nav>
+        <ul class="nav justify-content-around">  
+          <li class="nav-item">
+            <button id="counterTotalTask" type="button" class="btn btn-med">All Tasks: <span class="font-weight-bold"></span></button>
+          </li>
+          <li class="nav-item">
+            <button id="counterToDo" type="button" class="btn toDo btn-med">To Do: <span class="font-weight-bold"></span></button>
+          </li>
+          <li class="nav-item">
+            <button id="counterInProgress" type="button" class="btn inProgress btn-med">In Progress: <span class="font-weight-bold"></span></button>
+          </li>
+          <li class="nav-item">
+            <button id="counterInReview" type="button" class="btn review btn-med">In Review: <span class="font-weight-bold"></span></button>
+          </li>
+          <li class="nav-item">
+            <button  id="counterDone" type="button" class="btn done btn-med">Done: <span class="font-weight-bold"></span></button>
+          </li>    
+        </ul>
+      </nav>
+    </header>
+  </div>
+
+    
+
+
+    
+
+      <!-- This is where the HTML is appended -->
+    <main>
+      <div class="container mt-3 pt-3 mx-auto px-auto" id="tasks">
+        <div class="d-flex justify-content-center text-secondary mt-4">Task list empty. Please create one.</div>
+      </div>
+    </main>
+
+
+    <footer class="container mt-5 pt-5 pb-5">
+      <form class="clearAll" action="" method="post">
+        <button type="button" class="btn btn-link" id="clearSelected">Clear Selected Tasks <i class="icon fas fa-trash"></i></button>
+      </form>
+    </footer>
+
+  <!-- New Task Modal -->
+  <div class="modal fade" id="newTaskInput">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Task Detail</h5>
+          <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="taskForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="taskTitle">Task Name</label>
+              <input class="col-12 form-control" type="text" id="taskTitle" name="taskTitle">
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">Please enter more than 8 characters</div>
+            </div>
+
+            <div class="row form-group d-flex justify-content-around">
+              <div class="col-lg-6 form-row">
+                <label class="col-5 col-form-label" for="taskDueDate">Due Date:</label>
+                <input class="col-7 form-control" class="color" type="date"  id="taskDueDate" name="taskDueDate">
+                <div class="valid-feedback">Looks Good!</div>
+                <div class="invalid-feedback">Choose a future date</div>
+              </div>
+
+              <div class="col-lg-6 form-row">
+                <label class="col-5 col-form-label" for="taskDueTime">Due Time:</label>
+                <input class="col-7 form-control" class="color" type="time" id="taskDueTime" name="taskDueTime" >
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="taskAssignedTo">Assigned to:</label>
+              <input class="col-12 form-control" type="text" id="taskAssignedTo" name="taskAssignedTo">
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">Please enter First and Last Name</div>
+            </div>
+
+            <div class="form-group">
+              <label for="taskDescription">Task Detail</label>
+              <textarea class="form-control" id="taskDescription"></textarea>
+              <div class="valid-feedback">Looks Good!</div>
+              <div class="invalid-feedback">Please enter more than 15 characters</div>
+            </div>
+
+            <!-- <div id="selectPriority">
+              <div class="card card-body">
+                <p>
+                  Task Priority
+                </p>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="highPriority" name="priority" class="custom-control-input" value="bg-danger">
+                  <label class="custom-control-label" for="highPriority">High Priority</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="mediumPriority" name="priority" class="custom-control-input" value="bg-warning">
+                  <label class="custom-control-label" for="mediumPriority">Medium Priority</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="lowPriority" name="priority" class="custom-control-input" value="bg-info">
+                  <label class="custom-control-label" for="lowPriority">Low Priority</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="noPriority" name="priority" class="custom-control-input" value="bg-dark">
+                  <label class="custom-control-label" for="noPriority">No Priority</label>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="form-group form d-flex justify-content-around" id="selectStatus">
+              <label class="col-3 col-form-label">Task Status</label>
+              <div class="col-9 card card-body">
+                
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="statusToDo" name="status" class="custom-control-input" value="status-toDo">
+                  <label class="custom-control-label" for="statusToDo"> <i class="icon fas fa-flag"></i> To Do</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="statusInProgress" name="status" class="custom-control-input" value="status-inProgress">
+                  <label class="custom-control-label" for="statusInProgress"><i class="icon fas fa-spinner"></i> In Progress</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="statusReview" name="status" class="custom-control-input" value="status-review">
+                  <label class="custom-control-label" for="statusReview"><i class="icon fas fa-pen-nib"></i> Review</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="statusDone" name="status" class="custom-control-input" value="status-done">
+                  <label class="custom-control-label" for="statusDone"><i class="icon fas fa-thumbs-up"></i> Done</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="cancelButton" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary"  id="task-modal-save">Save Changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
