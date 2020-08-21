@@ -324,34 +324,44 @@ function addTaskToPage(task){  // adds HTML element to the page
 
   <div class="task" id="task${task.id}">
     <div class="row">
-      <div class="taskTitle col-lg-5 order-1 order-lg-1 order-md-1 order-sm-1">
-        
-          <p class="text-left d-inline"><span class="h6 font-weight-bold">${task.title}</span> 
-          <a href="#task${task.id}Description" class="text-primary icon ml-0 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle"></i></a></p>
+
+      <div class="taskTitle col-lg-4 order-1 col-sm">
+          <p class="text-left d-inline">
+            <span class="h6 font-weight-bold">${task.title}</span> 
+          
+            <a href="#task${task.id}Description" class="text-primary icon ml-1 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle"></i></a>
+          </p>
       </div>
       
-      <div class="col-lg-7 order-2 order-lg-2 order-md-2 order-sm-2">
-        
-      <ul class="row taskSummary">
-        
-      <li class="order-3 order-lg-3 order-md-3 order-sm-3">
-          <span>${task.date} - ${task.time}</span>
-        </li>
-          
-        <li class="order-4 order-lg-4 order-md-4 order-sm-4">
-        <span class="badge badge-dark">${task.status}</span>
+      <div class="col-lg-8 order-2">
+        <ul class="row taskSummary">
+
+          <li class="order-3 col-sm col-md">
+            <span class="spanDateTime">${task.date}</span>
+          </li>
+
+          <li class="order-4 col-sm col-md">
+            <span>${task.time}</span>
           </li>
         
-          <li class="order-5 order-lg-5 order-md-5 order-sm-5">
+          <li class="order-5 col-sm col-md">
+            <span class="badge badgeColor${task.status}">${task.status}</span>
+          </li>
+        
+          <li class="order-6 col-sm col-md">
           ${task.assignedTo}
           </li>
         
-          <li class="order-6 order-lg-6 order-md-6 order-sm-6">
-          <form class="removeBin" action="" method="post">
-          <a href="#newTaskInput" id="editTaskButton" role=button class="d-inline btn btn-link col-2 ml-0 pl-0 mb-0 pb-0" data-toggle="modal" data-target="#newTaskInput">
-          <i class="fas fa-pen-square text-dark"></i></a>
-              <input type="checkbox" class="ml-3 pl-0 border border-info">
-              <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask"><i class="icon fas fa-trash-alt"></i></button>
+          <li class="order-7 col-sm col-md">
+            <form class="removeBin" action="" method="post">
+              <a href="#newTaskInput" id="editTaskButton" role=button class="d-inline btn btn-link ml-0 pl-0 mb-0 pb-0" data-toggle="modal" title="Edit Task" data-target="#newTaskInput">
+              <i class="fas fa-pen-square text-dark"></i></a>
+
+              <input type="checkbox" class="ml-2 pl-0 border border-info">
+              
+              <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask" data-toggle="tooltip" data-placement="top" title="Delete This Task"><i class="icon fas fa-trash-alt"></i>
+              </button>
+            
               </form>
           </li>
 
@@ -413,6 +423,9 @@ function addTaskToPage(task){  // adds HTML element to the page
   
 }
 
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 // Day and Date
 var d = new Date(); // get the system date and store in variable
@@ -449,7 +462,7 @@ document.querySelector("#todayDate").innerHTML = todayFullDate;
 
 taskManager.addTask("Scrum Meeting",
 `Daily Scrum Meeting with the Development Team`,
-"Dominic Leighton",
+"Dominic Jr",
 "2020-08-31",
 "05:15",
 "Done");
@@ -463,7 +476,7 @@ taskManager.addTask("Task Planning",
 
 taskManager.addTask("UX/UI Design Final",
 `Final meeting for UX/UI Design`,
-"Billy Cunningham",
+"Billy Jean",
 "2020-09-15",
 "07:30",
 "In Progress");
