@@ -22,6 +22,15 @@ const taskForm = document.querySelector("#taskForm"); // new task form
 const taskContainer = document.querySelector("#tasks"); // container to display tasks
 const taskModalForm = document.querySelector("#taskForm"); // new task form
 
+class Task {
+
+}
+
+class TaskManager {
+
+  
+}
+
 
 // New Task Input Box
 openNewTask.addEventListener("click", function(event){ // add button clicked
@@ -83,6 +92,8 @@ function saveButtonClicked(event){
   }
 }
 
+
+// Inside Task Manager Class
 // Add task function
 function addTask(title,description,assignedTo, date, time,status){ // take all input fields parameters
   taskId++; // generated id = id + 1
@@ -236,6 +247,8 @@ function filterTaskStatus(status){
 const findTaskIndex = (task) => // finding index of a task
   tasks.findIndex(taskInArray => (taskInArray.id == task.id)); // returns the first index that matches the parameter
 
+
+  // Task Manager Classs
 function deleteTask(task){
   let taskIndex = findTaskIndex(task);
   tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
@@ -250,7 +263,7 @@ function statusStats(){
   counterInProgress.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "In Progress").length}`; // in progress status counter
   counterToDo.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "To Do").length}`; // to do status counter
 }
-
+// Task Manager Class
 function editTask(task){
   tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
   refreshPage(); // clear innerHTML and add the updated array
@@ -400,7 +413,7 @@ document.querySelector("#todayDate").innerHTML = todayFullDate;
 
 addTask("Scrum Meeting",
 `Daily Scrum Meeting with the Development Team`,
-"Dominic Leightonfield",
+"Dominic Leighton",
 "2020-08-31",
 "05:15",
 "Done");
