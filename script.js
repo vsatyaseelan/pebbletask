@@ -1,6 +1,4 @@
 
-const tasks=[];
-let taskId = 0;
 
 // Input fields in the new task modal
 const taskTitle = document.querySelector('#taskTitle');
@@ -23,13 +21,51 @@ const taskContainer = document.querySelector("#tasks"); // container to display 
 const taskModalForm = document.querySelector("#taskForm"); // new task form
 
 class Task {
-
+  constructor(id, title, description, assignedTo, date, time, status) {
+      this.id = id;
+      this.title = title;
+      this.description = description;
+      this.assignedTo = assignedTo;
+      this.date = date;
+      this.time = time;
+      this.status = status;
+  }
 }
 
 class TaskManager {
+  constructor() {
+    this.tasks=[];
+    this.taskId=0;
+  }
 
-  
+  addTask(title, description, assignedTo, date, time, status){ // take all input fields parameters
+    this.taskId++; // generated id = id + 1
+    const task = new Task(this.taskId, title, description, assignedTo, date, time, status); // assign all values including id to task
+    this.tasks.push(task); // push task to the tasks array
+    refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+    clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+    clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+    statusStats() // updates status counter
+  }
+
+  editTask(task){
+    this.tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
+    refreshPage(); // clear innerHTML and add the updated array
+    clearAllFieldValues(); // clear all field value and make modal empty
+    clearValidations(); // clears all validation classes and span
+    statusStats(); // update status counter button on HTML
+  }
+
+  deleteTask(task){
+    let taskIndex = findTaskIndex(task);
+    this.tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
+    refreshPage(); // clear innerHTML and creates a list of all the items in the array
+    statusStats(); // update status counter buttons
+  }
+
 }
+
+const taskManager = new TaskManager(taskContainer);                       // created an instance of class Task Manager
 
 
 // New Task Input Box
@@ -79,11 +115,11 @@ function saveButtonClicked(event){
 
   if(validationTaskForm(title, description, assignedTo, date, status)){ // check all parameters passed to this function
     if(!taskForm.classList.item(0)){ // if index does not match, go to add task
-    addTask(title,description,assignedTo, date, time, status); // add task function
+    taskManager.addTask(title, description, assignedTo, date, time, status); // add task function
     } else {
     const id = taskForm.classList.item(0); // assigns array position 0 to the id (id=0)
-    const task = {title, description, assignedTo, date, time, status, id};
-    editTask(task); // if index match, go to edit task
+    const task = {id, title, description, assignedTo, date, time, status};
+    taskManager.editTask(task); // if index match, go to edit task
     taskForm.classList.remove(`${id}`); // removed the class if from the task form
     }
     $("#newTaskInput").modal("hide"); // new task modal hidden
@@ -95,15 +131,15 @@ function saveButtonClicked(event){
 
 // Inside Task Manager Class
 // Add task function
-function addTask(title,description,assignedTo, date, time,status){ // take all input fields parameters
-  taskId++; // generated id = id + 1
-  const task = {title,description,assignedTo, date, time, status, id:taskId}; // assign all values including id to task
-  tasks.push(task); // push task to the tasks array
-  refreshPage(); // refresh the page (clears inner HTML and list the updated array)
-  clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
-  clearValidations(); // removes all is-invalid and is-valid classes to the span elements
-  statusStats() // updates status counter
-}
+// function addTask(title,description,assignedTo, date, time,status){ // take all input fields parameters
+//   taskId++; // generated id = id + 1
+//   const task = {title,description,assignedTo, date, time, status, id:taskId}; // assign all values including id to task
+//   tasks.push(task); // push task to the tasks array
+//   refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+//   clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+//   clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+//   statusStats() // updates status counter
+// }
 
 const formCancel=document.querySelector("#cancelButton"); // assign modal cancel button to the variable
 const formClose=document.querySelector("#close"); // assign modal close button to the variable
@@ -208,8 +244,8 @@ const totalNumber = document.querySelector("#counterTotalTask > span"); // assig
 counterTotalTask.addEventListener("click", getAllTask); // onclick of All Tasks button
 function getAllTask(){
   clearAll(); // clears innerHTML 
-  tasks.forEach(task => addTaskToPage(task)); // displays each task from the array
-  totalNumber.innerHTML = `${tasks.length}`; // All Tasks total number is the length of the array
+  taskManager.tasks.forEach(task => addTaskToPage(task)); // displays each task from the array
+  totalNumber.innerHTML = `${taskManager.tasks.length}`; // All Tasks total number is the length of the array
 }
 
 // Counter for Done
@@ -239,42 +275,42 @@ counterToDo.addEventListener("click", function(){ // onclick To Do button
 
 function filterTaskStatus(status){
   clearAll(); // clears innerHTML
-  tasks.forEach(function (task){ // display all task when passed parameter matches the status in the array
+  taskManager.tasks.forEach(function (task){ // display all task when passed parameter matches the status in the array
     if (status === task.status){addTaskToPage(task)};
   });
 }
 
 const findTaskIndex = (task) => // finding index of a task
-  tasks.findIndex(taskInArray => (taskInArray.id == task.id)); // returns the first index that matches the parameter
+  taskManager.tasks.findIndex(taskInArray => (taskInArray.id == task.id)); // returns the first index that matches the parameter
 
 
   // Task Manager Classs
-function deleteTask(task){
-  let taskIndex = findTaskIndex(task);
-  tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
-  refreshPage(); // clear innerHTML and creates a list of all the items in the array
-  statusStats(); // update status counter buttons
-}
+// function deleteTask(task){
+//   let taskIndex = findTaskIndex(task);
+//   tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
+//   refreshPage(); // clear innerHTML and creates a list of all the items in the array
+//   statusStats(); // update status counter buttons
+// }
 
 function statusStats(){
-  totalNumber.innerHTML = `${tasks.length}`; // gets total tasks in the array
-  counterDone.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "Done").length}`; // done status counter
-  counterInReview.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "In Review").length}`; // in review status counter
-  counterInProgress.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "In Progress").length}`; // in progress status counter
-  counterToDo.querySelector("span").innerHTML=`${tasks.filter(task => task.status === "To Do").length}`; // to do status counter
+  totalNumber.innerHTML = `${taskManager.tasks.length}`; // gets total tasks in the array
+  counterDone.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "Done").length}`; // done status counter
+  counterInReview.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "In Review").length}`; // in review status counter
+  counterInProgress.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "In Progress").length}`; // in progress status counter
+  counterToDo.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "To Do").length}`; // to do status counter
 }
 // Task Manager Class
-function editTask(task){
-  tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
-  refreshPage(); // clear innerHTML and add the updated array
-  clearAllFieldValues(); // clear all field value and make modal empty
-  clearValidations(); // clears all validation classes and span
-  statusStats(); // update status counter button on HTML
-}
+// function editTask(task){
+//   tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
+//   refreshPage(); // clear innerHTML and add the updated array
+//   clearAllFieldValues(); // clear all field value and make modal empty
+//   clearValidations(); // clears all validation classes and span
+//   statusStats(); // update status counter button on HTML
+// }
 
 function refreshPage(){
   clearAll();  // clear innerHTML
-  tasks.forEach(task => addTaskToPage(task)); // list all current tasks from array
+  taskManager.tasks.forEach(task => addTaskToPage(task)); // list all current tasks from array
 }
 
 function clearAll(){
@@ -336,11 +372,11 @@ function addTaskToPage(task){  // adds HTML element to the page
     clearAllFieldValues(); // clear all field values from modal form
     clearValidations(); // clear all validation spans
     taskForm.classList.add(task.id); // task form class added with the task id index
-    taskTitle.value=task.title; // task title assigned to taskTitle.value
+    taskTitle.value = task.title; // task title assigned to taskTitle.value
     taskDescription.value = task.description; // task description assigned to taskAssigned.value
     taskAssignedTo.value = task.assignedTo; // task assignedTo assigned to taskAssignedTo.value
     taskDueDate.value = task.date; // task date assigned to taskDueDate.value
-    taskDueTime.value =task.time; // task time assigned to taskDueTime.value
+    taskDueTime.value = task.time; // task time assigned to taskDueTime.value
     
     switch (task.status) { // checks if the task status matches with the case, if not default is selected
       case 'Done': done.checked = true;
@@ -355,7 +391,7 @@ function addTaskToPage(task){  // adds HTML element to the page
 
   const deleteTaskOnPage = taskElement.querySelector('#deleteSingleTask'); // deletes single task on the page
   deleteTaskOnPage.addEventListener("click", function(){ // onclick of the delete single task icon
-    deleteTask(task); // deletes the task of the given index
+    taskManager.deleteTask(task); // deletes the task of the given index
     deleteTaskOnPage.closest("div.task").remove(); // removes closed div in the task class
   });
 
@@ -367,7 +403,7 @@ function addTaskToPage(task){  // adds HTML element to the page
 
   function checkboxClicked (event){ // executed on Clear Selectd button onclick
        if (checkbox.checked){ // if the checkbox is checked
-         deleteTask(task); // deletes the task of the given index
+        taskManager.deleteTask(task); // deletes the task of the given index
           checkbox.closest("div.task").remove(); // removes the closes div in the task class
           clearSelected.removeEventListener('click', checkboxClicked); // removes previously registered event listener
            }
@@ -411,28 +447,28 @@ document.querySelector("#todayDate").innerHTML = todayFullDate;
 
 // Sample data for testing
 
-addTask("Scrum Meeting",
+taskManager.addTask("Scrum Meeting",
 `Daily Scrum Meeting with the Development Team`,
 "Dominic Leighton",
 "2020-08-31",
 "05:15",
 "Done");
 
-addTask("Task Planning",
+taskManager.addTask("Task Planning",
 `Task Planning Meeting with the Planning Team`,
 "Alvin Anderson",
 "2020-09-06",
 "02:05",
 "In Review");
 
-addTask("UX/UI Design Final",
+taskManager.addTask("UX/UI Design Final",
 `Final meeting for UX/UI Design`,
 "Billy Cunningham",
 "2020-09-15",
 "07:30",
 "In Progress");
 
-addTask("End of Sprint Meeting",
+taskManager.addTask("End of Sprint Meeting",
 `Meeting Team and Product Owner`,
 "Wendy Jane",
 "2020-10-07",
