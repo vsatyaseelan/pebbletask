@@ -1,4 +1,5 @@
 /* # Intro Section */
+
 html {
   scroll-behavior: smooth;
 }
@@ -116,6 +117,10 @@ body {
 }
 .iconFloat:hover {
   transform: translateY(-7px);
+}
+
+.iconShadow {
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .iconDelete:hover {
@@ -323,4 +328,8 @@ footer {
     border-color: #007bff;
     color: #007bff;
     text-decoration: none;
+  }
+
+  .navbar {
+    margin-bottom: 0;
   }
