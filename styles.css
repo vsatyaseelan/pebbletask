@@ -66,6 +66,8 @@ body {
   margin-bottom: 40px;
   font-size: 48px;
   font-weight: 700;
+  text-shadow: 1px 1px 10px #032b99; 
+
 }
 
 #intro .intro-info h2 span {
@@ -83,50 +85,72 @@ body {
 #intro .intro-info .btn-top-new, #intro .intro-info .btn-top-view {
   font-size: 14px;
   font-weight: 600;
+  font-weight: bold;
   letter-spacing: 1px;
   display: inline-block;
   padding: 10px 32px;
-  border-radius: 50px;
   transition: 0.5s;
   margin: 0 20px 20px 0;
   color: #fff;
-}
-
-#intro .intro-info .btn-top-new {
   background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
-  border: 2px solid #fff;
-  color: #fff;
+  border-color: #fff;
+  border-radius: 45px;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
 }
 
-#intro .intro-info .btn-top-new:hover {
+#intro .intro-info .btn-top-new:hover, #intro .intro-info .btn-top-view:hover {
   background: #fff;
-  border-color: #6e00ff;
   color: #6e00ff;
   text-decoration: none;
   font-weight: bold;
+  transform: translateY(-7px);
 }
 
-#intro .intro-info .btn-top-view {
-  background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
-  border: 2px solid #fff;
-  color: #fff;}
+#todayDate {
+  color: rgb(75, 75, 75);
+}
 
-#intro .intro-info .btn-top-view:hover {
-  background: #fff;
-  border-color: #6e00ff;
-  color: #6e00ff;
+.iconFloat {
+  transition: all 0.3s ease 0s;
+}
+.iconFloat:hover {
+  transform: translateY(-7px);
+}
+
+.iconDelete:hover {
+  color: red;
   text-decoration: none;
-  font-weight: bold;
 }
 
 .btn-saveModal {
   background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
   color: white;
+  font-weight: bold;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-saveModal:hover {
+  background: #fff;
+  border-color: #6e00ff;
+  color: #6e00ff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .btn-closeModal {
   background: linear-gradient(50deg, #cf0606 0, #ff4e4e 100%);
   color: white;
+  font-weight: bold;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-closeModal:hover {
+  background: #fff;
+  border-color: #cf0606;
+  color: #cf0606;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .badgeColorDone {
@@ -239,7 +263,11 @@ footer {
 .modal-header {
   color: white;
   background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
-  ;
+  font-weight: bold;
+}
+
+.modal-title {
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .spanDateTime {
@@ -260,9 +288,7 @@ footer {
     display: inline-block;
   }
   
-  .icon:hover {
-    opacity:70%;
-  }
+  
   .taskSummary {
      display: flex;
      list-style-type: none;

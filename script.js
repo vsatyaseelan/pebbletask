@@ -1,5 +1,3 @@
-
-
 // Input fields in the new task modal
 const taskTitle = document.querySelector('#taskTitle');
 const taskDescription = document.querySelector('#taskDescription');
@@ -67,7 +65,6 @@ class TaskManager {
 
 const taskManager = new TaskManager(taskContainer);                       // created an instance of class Task Manager
 
-
 // New Task Input Box
 openNewTask.addEventListener("click", function(event){ // add button clicked
   clearAllFieldValues(); // all fields are cleared to null and radio button false
@@ -91,7 +88,7 @@ function clearAllFieldValues(){ // clears all fields value and assigned false (f
   done.checked = false;
   review.checked = false;
   inProgress.checked = false;
-  toDo.checked = false;
+  toDo.checked = true;
 }
 
 function clearValidations(){ // removes both is-invalid and is-valid class from all the fields
@@ -100,7 +97,6 @@ function clearValidations(){ // removes both is-invalid and is-valid class from 
   taskAssignedTo.classList.remove("is-invalid", "is-valid");
   taskDueDate.classList.remove("is-invalid", "is-valid");
 }
-
 
 taskModalForm.addEventListener("submit", saveButtonClicked); // on clicking submit button on the new task form, saveButtonClicked function called
 
@@ -128,19 +124,6 @@ function saveButtonClicked(event){
   }
 }
 
-
-// Inside Task Manager Class
-// Add task function
-// function addTask(title,description,assignedTo, date, time,status){ // take all input fields parameters
-//   taskId++; // generated id = id + 1
-//   const task = {title,description,assignedTo, date, time, status, id:taskId}; // assign all values including id to task
-//   tasks.push(task); // push task to the tasks array
-//   refreshPage(); // refresh the page (clears inner HTML and list the updated array)
-//   clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
-//   clearValidations(); // removes all is-invalid and is-valid classes to the span elements
-//   statusStats() // updates status counter
-// }
-
 const formCancel=document.querySelector("#cancelButton"); // assign modal cancel button to the variable
 const formClose=document.querySelector("#close"); // assign modal close button to the variable
 
@@ -159,7 +142,6 @@ formClose.addEventListener("click", function(event){
 });
 
 // Status return
-
 function selectedStatus(){
 
   if (done.checked){
@@ -283,15 +265,6 @@ function filterTaskStatus(status){
 const findTaskIndex = (task) => // finding index of a task
   taskManager.tasks.findIndex(taskInArray => (taskInArray.id == task.id)); // returns the first index that matches the parameter
 
-
-  // Task Manager Classs
-// function deleteTask(task){
-//   let taskIndex = findTaskIndex(task);
-//   tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
-//   refreshPage(); // clear innerHTML and creates a list of all the items in the array
-//   statusStats(); // update status counter buttons
-// }
-
 function statusStats(){
   totalNumber.innerHTML = `${taskManager.tasks.length}`; // gets total tasks in the array
   counterDone.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "Done").length}`; // done status counter
@@ -299,14 +272,6 @@ function statusStats(){
   counterInProgress.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "In Progress").length}`; // in progress status counter
   counterToDo.querySelector("span").innerHTML=`${taskManager.tasks.filter(task => task.status === "To Do").length}`; // to do status counter
 }
-// Task Manager Class
-// function editTask(task){
-//   tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
-//   refreshPage(); // clear innerHTML and add the updated array
-//   clearAllFieldValues(); // clear all field value and make modal empty
-//   clearValidations(); // clears all validation classes and span
-//   statusStats(); // update status counter button on HTML
-// }
 
 function refreshPage(){
   clearAll();  // clear innerHTML
@@ -329,7 +294,7 @@ function addTaskToPage(task){  // adds HTML element to the page
           <p class="text-left d-inline">
             <span class="h6 font-weight-bold">${task.title}</span> 
           
-            <a href="#task${task.id}Description" class="text-primary icon ml-1 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle"></i></a>
+            <a href="#task${task.id}Description" class="text-primary ml-1 pl-0 small" data-toggle="collapse" data-target="#task${task.id}Description"><i class="fas fa-plus-circle fa-lg iconFloat"></i></a>
           </p>
       </div>
       
@@ -355,13 +320,13 @@ function addTaskToPage(task){  // adds HTML element to the page
           <li class="order-7 col-sm col-md">
             <form class="removeBin" action="" method="post">
               <a href="#newTaskInput" id="editTaskButton" role=button class="d-inline btn btn-link ml-0 pl-0 mb-0 pb-0" data-toggle="modal" title="Edit Task" data-target="#newTaskInput">
-              <i class="fas fa-pen-square text-dark"></i></a>
+              <i class="fas fa-pen-square text-dark iconFloat fa-lg"></i></a>
 
               <input type="checkbox" class="ml-2 pl-0 border border-info">
               
-              <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask" data-toggle="tooltip" data-placement="top" title="Delete This Task"><i class="icon fas fa-trash-alt"></i>
+              <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask" data-toggle="" data-placement="top" title="Delete This Task"><i class="fas fa-trash-alt fa-lg iconFloat iconDelete "></i>
               </button>
-            
+             
               </form>
           </li>
 
@@ -375,7 +340,6 @@ function addTaskToPage(task){  // adds HTML element to the page
   </div>`;
   
  const taskElement = document.createRange().createContextualFragment(html); // passing html fragment to the page
- 
  
  const editTaskOnPage = taskElement.querySelector("#editTaskButton"); // assign Edit Task button to to a variable
   editTaskOnPage.addEventListener("click", function(){ // onclick of edit task button
@@ -404,8 +368,6 @@ function addTaskToPage(task){  // adds HTML element to the page
     taskManager.deleteTask(task); // deletes the task of the given index
     deleteTaskOnPage.closest("div.task").remove(); // removes closed div in the task class
   });
-
-
 
   const checkbox = taskElement.querySelector('.removeBin > input[type="checkbox"]'); // assign checkbox in the removeBin class to checkbox variable
   const clearSelected = document.querySelector("#clearSelected"); // assign Clear Selected button to clearSelected

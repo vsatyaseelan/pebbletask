@@ -41,7 +41,7 @@
   </section> 
 
         <div class="card-body mt-2 mb-2" id="divTodayTask">
-          <h5 class="card-title" id="todayDate"></h5>
+          <h4 class="card-title" id="todayDate"></h5>
         </div>
   
 <!-- New Task Input Form -->
@@ -92,7 +92,7 @@
 
     <footer class="container mt-5 pt-5 pb-5">
       <form class="clearAll" action="" method="post">
-        <button type="button" class="btn btn-link" id="clearSelected">Clear Selected Tasks <i class="icon fas fa-trash"></i></button>
+        <button type="button" class="btn btn-link iconDelete iconFloat" id="clearSelected">Clear Selected Tasks <i class="icon fas fa-trash"></i></button>
       </form>
     </footer>
 
@@ -101,15 +101,16 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Task Detail</h5>
+          <h5 class="modal-title">Task Details</h5>
           <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        
         <form id="taskForm">
           <div class="modal-body">
             <div class="form-group">
-              <label for="taskTitle">Task Name</label>
+              <label for="taskTitle">Task Name:</label>
               <input class="col-12 form-control" type="text" id="taskTitle" name="taskTitle">
               <div class="valid-feedback">Looks Good!</div>
               <div class="invalid-feedback">Please enter more than 8 characters</div>
@@ -137,43 +138,48 @@
             </div>
 
             <div class="form-group">
-              <label for="taskDescription">Task Detail</label>
+              <label for="taskDescription">Task Description:</label>
               <textarea class="form-control" id="taskDescription"></textarea>
               <div class="valid-feedback">Looks Good!</div>
               <div class="invalid-feedback">Please enter more than 15 characters</div>
             </div>
 
             <div class="form-group form d-flex justify-content-around" id="selectStatus">
-              <label class="col-3 col-form-label">Task Status</label>
-              <div class="col-9 card card-body">
+              <label class="col-3 col-form-label">Task Status:</label>
+              
+              <div class="col-9">
                 
                 <div class="custom-control custom-radio">
                   <input type="radio" id="statusToDo" name="status" class="custom-control-input" value="To Do">
-                  <label class="custom-control-label" for="statusToDo"> <i class="icon fas fa-flag"></i> To Do</label>
+                  <label class="custom-control-label" for="statusToDo">To Do</label>
                 </div>
                 <div class="custom-control custom-radio">
                   <input type="radio" id="statusInProgress" name="status" class="custom-control-input" value="In Progress">
-                  <label class="custom-control-label" for="statusInProgress"><i class="icon fas fa-spinner"></i> In Progress</label>
+                  <label class="custom-control-label" for="statusInProgress">In Progress</label>
                 </div>
                 <div class="custom-control custom-radio">
                   <input type="radio" id="statusReview" name="status" class="custom-control-input" value="In Review">
-                  <label class="custom-control-label" for="statusReview"><i class="icon fas fa-pen-nib"></i> Review</label>
+                  <label class="custom-control-label" for="statusReview">Review</label>
                 </div>
                 <div class="custom-control custom-radio">
                   <input type="radio" id="statusDone" name="status" class="custom-control-input" value="Done">
-                  <label class="custom-control-label" for="statusDone"><i class="icon fas fa-thumbs-up"></i> Done</label>
+                  <label class="custom-control-label" for="statusDone">Done</label>
                 </div>
+
               </div>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-closeModal" id="cancelButton" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-saveModal" id="task-modal-save">Save Changes</button>
+              <button type="submit" class="btn btn-saveModal" id="task-modal-save">Save</button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+
+  
 
   
 
