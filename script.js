@@ -33,7 +33,10 @@ class Task {
 class TaskManager {
   constructor() {
     this.tasks=[];
-    this.taskId=0;
+
+    // Local Storage
+    this.taskId = parseInt(localStorage.getItem('taskId')) || 1;
+    localStorage.setItem('taskId',this.taskId);
   }
 
   addTask(title, description, assignedTo, date, time, status){ // take all input fields parameters
@@ -44,6 +47,12 @@ class TaskManager {
     clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
     clearValidations(); // removes all is-invalid and is-valid classes to the span elements
     statusStats() // updates status counter
+
+    // Add to local storage
+    localStorage.setItem('taskId', this.taskId);
+    let mynewtasks = JSON.parse(localStorage.getItem("mytasks")) || [];
+    mynewtasks.push(task);
+    localStorage.setItem("mytasks", JSON.stringify(mynewtasks));
   }
 
   editTask(task){
@@ -56,11 +65,32 @@ class TaskManager {
 
   deleteTask(task){
     let taskIndex = findTaskIndex(task);
+    let id = this.tasks[taskIndex].id;
+    alert(id);
     this.tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
+    
+    // Local Storage - Delete
+    let mynewtasks = JSON.parse(localStorage.getItem("mytasks"));
+    //alert(mynewtasks.length);
+    for (let i = 0; i < mynewtasks.length; i++) {
+      alert(mynewtasks.length);
+      alert(id);
+             alert(mynewtasks[i].id);
+        if (mynewtasks[i].id == id) {
+             // delete from local storage
+            //  alert(taskIndex);
+            //  alert(mynewtasks[i].id);
+             mynewtasks.splice(i, 1);
+             localStorage.setItem("mytasks",JSON.stringify(mynewtasks));
+             break;
+        }
+    }
+
     refreshPage(); // clear innerHTML and creates a list of all the items in the array
     statusStats(); // update status counter buttons
   }
 
+  
 }
 
 const taskManager = new TaskManager(taskContainer);                       // created an instance of class Task Manager
@@ -116,12 +146,35 @@ function saveButtonClicked(event){
     const id = taskForm.classList.item(0); // assigns array position 0 to the id (id=0)
     const task = {id, title, description, assignedTo, date, time, status};
     taskManager.editTask(task); // if index match, go to edit task
-    taskForm.classList.remove(`${id}`); // removed the class if from the task form
+
+    // Local Storage Update Task
+  
+    let mynewtasks = JSON.parse(localStorage.getItem("mytasks"));
+    alert(mynewtasks.length);
+    for (let i = 0; i < mynewtasks.length; i++) {
+      alert(mynewtasks[i].id);
+      alert(id);
+      if (mynewtasks[i].id == id) {
+        alert("Inside For Loop");
+        mynewtasks[i].title = title;
+    mynewtasks[i].description = description;
+    mynewtasks[i].assignedTo = assignedTo;
+    mynewtasks[i].date = date;
+    mynewtasks[i].time = time;
+    mynewtasks[i].status = status;
+    localStorage.setItem("mytasks", JSON.stringify(mynewtasks));
+    break;
+      }
+    }
+
+    taskForm.classList.remove(`${id}`); // removed the class id from the task form
     }
     $("#newTaskInput").modal("hide"); // new task modal hidden
   }  else {
     alert("Please complete all fields."); // else alert to complete all fields
   }
+  refreshPage(); // clear innerHTML and creates a list of all the items in the array
+    statusStats(); // update status counter buttons
 }
 
 const formCancel=document.querySelector("#cancelButton"); // assign modal cancel button to the variable
@@ -275,7 +328,10 @@ function statusStats(){
 
 function refreshPage(){
   clearAll();  // clear innerHTML
-  taskManager.tasks.forEach(task => addTaskToPage(task)); // list all current tasks from array
+  let mynewtasks = JSON.parse(window.localStorage.getItem('mytasks')) || taskManager.tasks;
+  mynewtasks.forEach(task => addTaskToPage(task)); // list all current tasks from array
+
+
 }
 
 function clearAll(){
@@ -341,7 +397,7 @@ function addTaskToPage(task){  // adds HTML element to the page
   
  const taskElement = document.createRange().createContextualFragment(html); // passing html fragment to the page
  
- const editTaskOnPage = taskElement.querySelector("#editTaskButton"); // assign Edit Task button to to a variable
+ const editTaskOnPage = taskElement.querySelector("#editTaskButton"); // assign Edit Task button to a variable
   editTaskOnPage.addEventListener("click", function(){ // onclick of edit task button
     clearAllFieldValues(); // clear all field values from modal form
     clearValidations(); // clear all validation spans
@@ -361,6 +417,7 @@ function addTaskToPage(task){  // adds HTML element to the page
       break;
       default: toDo.checked  = true; // by default, To Do is selected 
     }
+
   });
 
   const deleteTaskOnPage = taskElement.querySelector('#deleteSingleTask'); // deletes single task on the page
@@ -420,32 +477,34 @@ var year = d.getFullYear();
 var todayFullDate = todayDate + nth(todayDate) + " " + todayMonth + " " + year + " - Happy " + day + "!";
 document.querySelector("#todayDate").innerHTML = todayFullDate;
 
+
+refreshPage();
 // Sample data for testing
 
-taskManager.addTask("Scrum Meeting",
-`Daily Scrum Meeting with the Development Team`,
-"Dominic Jr",
-"2020-08-31",
-"05:15",
-"Done");
+// taskManager.addTask("Scrum Meeting",
+// `Daily Scrum Meeting with the Development Team`,
+// "Dominic Jr",
+// "2020-08-31",
+// "05:15",
+// "Done");
 
-taskManager.addTask("Task Planning",
-`Task Planning Meeting with the Planning Team`,
-"Alvin Anderson",
-"2020-09-06",
-"02:05",
-"In Review");
+// taskManager.addTask("Task Planning",
+// `Task Planning Meeting with the Planning Team`,
+// "Alvin Anderson",
+// "2020-09-06",
+// "02:05",
+// "In Review");
 
-taskManager.addTask("UX/UI Design Final",
-`Final meeting for UX/UI Design`,
-"Billy Jean",
-"2020-09-15",
-"07:30",
-"In Progress");
+// taskManager.addTask("UX/UI Design Final",
+// `Final meeting for UX/UI Design`,
+// "Billy Jean",
+// "2020-09-15",
+// "07:30",
+// "In Progress");
 
-taskManager.addTask("End of Sprint Meeting",
-`Meeting Team and Product Owner`,
-"Wendy Jane",
-"2020-10-07",
-"09:45",
-"To Do");
+// taskManager.addTask("End of Sprint Meeting",
+// `Meeting Team and Product Owner`,
+// "Wendy Jane",
+// "2020-10-07",
+// "09:45",
+// "To Do");
