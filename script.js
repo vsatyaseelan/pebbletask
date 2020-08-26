@@ -66,20 +66,13 @@ class TaskManager {
   deleteTask(task){
     let taskIndex = findTaskIndex(task);
     let id = this.tasks[taskIndex].id;
-    alert(id);
     this.tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
     
     // Local Storage - Delete
     let mynewtasks = JSON.parse(localStorage.getItem("mytasks"));
     //alert(mynewtasks.length);
     for (let i = 0; i < mynewtasks.length; i++) {
-      alert(mynewtasks.length);
-      alert(id);
-             alert(mynewtasks[i].id);
-        if (mynewtasks[i].id == id) {
-             // delete from local storage
-            //  alert(taskIndex);
-            //  alert(mynewtasks[i].id);
+             if (mynewtasks[i].id == id) {
              mynewtasks.splice(i, 1);
              localStorage.setItem("mytasks",JSON.stringify(mynewtasks));
              break;
@@ -141,11 +134,11 @@ function saveButtonClicked(event){
 
   if(validationTaskForm(title, description, assignedTo, date, status)){ // check all parameters passed to this function
     if(!taskForm.classList.item(0)){ // if index does not match, go to add task
-    taskManager.addTask(title, description, assignedTo, date, time, status); // add task function
+     taskManager.addTask(title, description, assignedTo, date, time, status); // add task function
     } else {
-    const id = taskForm.classList.item(0); // assigns array position 0 to the id (id=0)
-    const task = {id, title, description, assignedTo, date, time, status};
-    taskManager.editTask(task); // if index match, go to edit task
+      const id = taskForm.classList.item(0); // assigns array position 0 to the id (id=0)
+      const task = {id, title, description, assignedTo, date, time, status};
+      taskManager.editTask(task); // if index match, go to edit task
 
     // Local Storage Update Task
   
@@ -157,13 +150,13 @@ function saveButtonClicked(event){
       if (mynewtasks[i].id == id) {
         alert("Inside For Loop");
         mynewtasks[i].title = title;
-    mynewtasks[i].description = description;
-    mynewtasks[i].assignedTo = assignedTo;
-    mynewtasks[i].date = date;
-    mynewtasks[i].time = time;
-    mynewtasks[i].status = status;
-    localStorage.setItem("mytasks", JSON.stringify(mynewtasks));
-    break;
+        mynewtasks[i].description = description;
+        mynewtasks[i].assignedTo = assignedTo;
+        mynewtasks[i].date = date;
+        mynewtasks[i].time = time;
+        mynewtasks[i].status = status;
+        localStorage.setItem("mytasks", JSON.stringify(mynewtasks));
+        break;
       }
     }
 
@@ -173,7 +166,7 @@ function saveButtonClicked(event){
   }  else {
     alert("Please complete all fields."); // else alert to complete all fields
   }
-  refreshPage(); // clear innerHTML and creates a list of all the items in the array
+    refreshPage(); // clear innerHTML and creates a list of all the items in the array
     statusStats(); // update status counter buttons
 }
 
@@ -477,34 +470,4 @@ var year = d.getFullYear();
 var todayFullDate = todayDate + nth(todayDate) + " " + todayMonth + " " + year + " - Happy " + day + "!";
 document.querySelector("#todayDate").innerHTML = todayFullDate;
 
-
 refreshPage();
-// Sample data for testing
-
-// taskManager.addTask("Scrum Meeting",
-// `Daily Scrum Meeting with the Development Team`,
-// "Dominic Jr",
-// "2020-08-31",
-// "05:15",
-// "Done");
-
-// taskManager.addTask("Task Planning",
-// `Task Planning Meeting with the Planning Team`,
-// "Alvin Anderson",
-// "2020-09-06",
-// "02:05",
-// "In Review");
-
-// taskManager.addTask("UX/UI Design Final",
-// `Final meeting for UX/UI Design`,
-// "Billy Jean",
-// "2020-09-15",
-// "07:30",
-// "In Progress");
-
-// taskManager.addTask("End of Sprint Meeting",
-// `Meeting Team and Product Owner`,
-// "Wendy Jane",
-// "2020-10-07",
-// "09:45",
-// "To Do");
