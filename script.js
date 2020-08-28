@@ -83,12 +83,11 @@ class TaskManager {
     statusStats(); // update status counter buttons
   }
 
-  
 }
 
 const taskManager = new TaskManager(taskContainer);                       // created an instance of class Task Manager
 
-// New Task Input Box
+// New Task Input Box On Page Load
 openNewTask.addEventListener("click", function(event){ // add button clicked
   clearAllFieldValues(); // all fields are cleared to null and radio button false
   clearValidations(); // validation span cleared from the form
@@ -143,12 +142,12 @@ function saveButtonClicked(event){
     // Local Storage Update Task
   
     let mynewtasks = JSON.parse(localStorage.getItem("mytasks"));
-    alert(mynewtasks.length);
+    // alert(mynewtasks.length);
     for (let i = 0; i < mynewtasks.length; i++) {
-      alert(mynewtasks[i].id);
-      alert(id);
+      // alert(mynewtasks[i].id);
+      // alert(id);
       if (mynewtasks[i].id == id) {
-        alert("Inside For Loop");
+        // alert("Inside For Loop");
         mynewtasks[i].title = title;
         mynewtasks[i].description = description;
         mynewtasks[i].assignedTo = assignedTo;
@@ -323,8 +322,6 @@ function refreshPage(){
   clearAll();  // clear innerHTML
   let mynewtasks = JSON.parse(window.localStorage.getItem('mytasks')) || taskManager.tasks;
   mynewtasks.forEach(task => addTaskToPage(task)); // list all current tasks from array
-
-
 }
 
 function clearAll(){
@@ -370,15 +367,11 @@ function addTaskToPage(task){  // adds HTML element to the page
             <form class="removeBin" action="" method="post">
               <a href="#newTaskInput" id="editTaskButton" role=button class="d-inline btn btn-link ml-0 pl-0 mb-0 pb-0" data-toggle="modal" title="Edit Task" data-target="#newTaskInput">
               <i class="fas fa-pen-square text-dark iconFloat fa-lg"></i></a>
-
               <input type="checkbox" class="ml-2 pl-0 border border-info">
-              
               <button type="button" class="ml-3 pl-0 btn btn-link removeBin" id="deleteSingleTask" data-toggle="" data-placement="top" title="Delete This Task"><i class="fas fa-trash-alt fa-lg iconFloat iconDelete "></i>
               </button>
-             
               </form>
           </li>
-
         </ul>
       </div>
     </div>
