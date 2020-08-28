@@ -1,0 +1,27 @@
+{
+  "name": "pebbletask",
+  "version": "1.0.0",
+  "description": "This is a student project by Generations Australia<br> Junior Web Developer 2020",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vsatyaseelan/pebbletask.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vsatyaseelan/pebbletask/issues"
+  },
+  "homepage": "https://github.com/vsatyaseelan/pebbletask#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-jest": "^26.3.0",
+    "jest": "^26.4.2",
+    "parcel-bundler": "^1.12.4"
+  }
+}
