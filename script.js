@@ -332,10 +332,8 @@ function addTaskToPage(task){  // adds HTML element to the page
 
   // assign all the HTML Element code to html
   const html = `
-
   <div class="task" id="task${task.id}">
     <div class="row">
-
       <div class="taskTitle col-lg-4 order-1 col-sm">
           <p class="text-left d-inline">
             <span class="h6 font-weight-bold">${task.title}</span> 
@@ -346,11 +344,9 @@ function addTaskToPage(task){  // adds HTML element to the page
       
       <div class="col-lg-8 order-2">
         <ul class="row taskSummary">
-
           <li class="order-3 col-sm col-md">
             <span class="spanDateTime">${task.date}</span>
           </li>
-
           <li class="order-4 col-sm col-md">
             <span>${task.time}</span>
           </li>

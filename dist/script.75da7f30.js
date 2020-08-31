@@ -117,37 +117,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"script.js":[function(require,module,exports) {
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+})({"task.js":[function(require,module,exports) {
+"use strict";
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Input fields in the new task modal
-var taskTitle = document.querySelector('#taskTitle');
-var taskDescription = document.querySelector('#taskDescription');
-var taskAssignedTo = document.querySelector('#taskAssignedTo');
-var taskDueDate = document.querySelector('#taskDueDate');
-var taskDueTime = document.querySelector('#taskDueTime'); //Status radio button
-
-var done = document.querySelector('#statusDone'); // Done
-
-var review = document.querySelector('#statusReview'); // Review
-
-var inProgress = document.querySelector('#statusInProgress'); // In Progress
-
-var toDo = document.querySelector('#statusToDo'); // To Do
-
-var newToDo = document.querySelector("#newToDo"); // input box for new task
-
-var openNewTask = document.querySelector("#openForm"); // add task button to open new task form
-
-var taskForm = document.querySelector("#taskForm"); // new task form
-
-var taskContainer = document.querySelector("#tasks"); // container to display tasks
-
-var taskModalForm = document.querySelector("#taskForm"); // new task form
 
 var Task = function Task(id, title, description, assignedTo, date, time, status) {
   _classCallCheck(this, Task);
@@ -160,6 +138,25 @@ var Task = function Task(id, title, description, assignedTo, date, time, status)
   this.time = time;
   this.status = status;
 };
+
+exports.default = Task;
+},{}],"taskmanager.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _task = _interopRequireDefault(require("./task.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var TaskManager = /*#__PURE__*/function () {
   function TaskManager() {
@@ -177,17 +174,13 @@ var TaskManager = /*#__PURE__*/function () {
       // take all input fields parameters
       this.taskId++; // generated id = id + 1
 
-      var task = new Task(this.taskId, title, description, assignedTo, date, time, status); // assign all values including id to task
+      var task = new _task.default(this.taskId, title, description, assignedTo, date, time, status); // assign all values including id to task
 
       this.tasks.push(task); // push task to the tasks array
-
-      refreshPage(); // refresh the page (clears inner HTML and list the updated array)
-
-      clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
-
-      clearValidations(); // removes all is-invalid and is-valid classes to the span elements
-
-      statusStats(); // updates status counter
+      // refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+      // clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+      // clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+      // statusStats() // updates status counter
       // Add to local storage
 
       localStorage.setItem('taskId', this.taskId);
@@ -235,7 +228,97 @@ var TaskManager = /*#__PURE__*/function () {
   return TaskManager;
 }();
 
-var taskManager = new TaskManager(taskContainer); // created an instance of class Task Manager
+exports.default = TaskManager;
+},{"./task.js":"task.js"}],"script.js":[function(require,module,exports) {
+"use strict";
+
+var _taskmanager = _interopRequireDefault(require("./taskmanager.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Input fields in the new task modal
+var taskTitle = document.querySelector('#taskTitle');
+var taskDescription = document.querySelector('#taskDescription');
+var taskAssignedTo = document.querySelector('#taskAssignedTo');
+var taskDueDate = document.querySelector('#taskDueDate');
+var taskDueTime = document.querySelector('#taskDueTime'); //Status radio button
+
+var done = document.querySelector('#statusDone'); // Done
+
+var review = document.querySelector('#statusReview'); // Review
+
+var inProgress = document.querySelector('#statusInProgress'); // In Progress
+
+var toDo = document.querySelector('#statusToDo'); // To Do
+
+var newToDo = document.querySelector("#newToDo"); // input box for new task
+
+var openNewTask = document.querySelector("#openForm"); // add task button to open new task form
+
+var taskForm = document.querySelector("#taskForm"); // new task form
+
+var taskContainer = document.querySelector("#tasks"); // container to display tasks
+
+var taskModalForm = document.querySelector("#taskForm"); // new task form
+// class Task {
+//   constructor(id, title, description, assignedTo, date, time, status) {
+//       this.id = id;
+//       this.title = title;
+//       this.description = description;
+//       this.assignedTo = assignedTo;
+//       this.date = date;
+//       this.time = time;
+//       this.status = status;
+//   }
+// }
+// export default class TaskManager {
+//   constructor() {
+//     this.tasks=[];
+//     // Local Storage
+//     this.taskId = parseInt(localStorage.getItem('taskId')) || 1;
+//     localStorage.setItem('taskId',this.taskId);
+//   }
+//   addTask(title, description, assignedTo, date, time, status){ // take all input fields parameters
+//     this.taskId++; // generated id = id + 1
+//     const task = new Task(this.taskId, title, description, assignedTo, date, time, status); // assign all values including id to task
+//     this.tasks.push(task); // push task to the tasks array
+//     // refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+//     // clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+//     // clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+//     // statusStats() // updates status counter
+//     // Add to local storage
+//     localStorage.setItem('taskId', this.taskId);
+//     let mynewtasks = JSON.parse(localStorage.getItem("mytasks")) || [];
+//     mynewtasks.push(task);
+//     localStorage.setItem("mytasks", JSON.stringify(mynewtasks));
+//   }
+//   editTask(task){
+//     this.tasks.splice(findTaskIndex(task),1,task); // at position of the index, remove 1 item and add task
+//     refreshPage(); // clear innerHTML and add the updated array
+//     clearAllFieldValues(); // clear all field value and make modal empty
+//     clearValidations(); // clears all validation classes and span
+//     statusStats(); // update status counter button on HTML
+//   }
+//   deleteTask(task){
+//     let taskIndex = findTaskIndex(task);
+//     let id = this.tasks[taskIndex].id;
+//     this.tasks.splice(taskIndex,1); // deletes one index from the tasks array that matched the taskIndex
+//     // Local Storage - Delete
+//     let mynewtasks = JSON.parse(localStorage.getItem("mytasks"));
+//     //alert(mynewtasks.length);
+//     for (let i = 0; i < mynewtasks.length; i++) {
+//              if (mynewtasks[i].id == id) {
+//              mynewtasks.splice(i, 1);
+//              localStorage.setItem("mytasks",JSON.stringify(mynewtasks));
+//              break;
+//         }
+//     }
+//     refreshPage(); // clear innerHTML and creates a list of all the items in the array
+//     statusStats(); // update status counter buttons
+//   }
+// }
+
+var taskManager = new _taskmanager.default(taskContainer); // created an instance of class Task Manager
 // New Task Input Box On Page Load
 
 openNewTask.addEventListener("click", function (event) {
@@ -294,6 +377,14 @@ function saveButtonClicked(event) {
     if (!taskForm.classList.item(0)) {
       // if index does not match, go to add task
       taskManager.addTask(title, description, assignedTo, date, time, status); // add task function
+
+      refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+
+      clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+
+      clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+
+      statusStats(); // updates status counter
     } else {
       var id = taskForm.classList.item(0); // assigns array position 0 to the id (id=0)
 
@@ -307,6 +398,14 @@ function saveButtonClicked(event) {
         status: status
       };
       taskManager.editTask(task); // if index match, go to edit task
+
+      refreshPage(); // refresh the page (clears inner HTML and list the updated array)
+
+      clearAllFieldValues(); // clear all field value and assign null to fields and false to radio button value
+
+      clearValidations(); // removes all is-invalid and is-valid classes to the span elements
+
+      statusStats(); // updates status counter
       // Local Storage Update Task
 
       var mynewtasks = JSON.parse(localStorage.getItem("mytasks")); // alert(mynewtasks.length);
@@ -549,7 +648,7 @@ function clearAll() {
 function addTaskToPage(task) {
   // adds HTML element to the page
   // assign all the HTML Element code to html
-  var html = "\n\n  <div class=\"task\" id=\"task".concat(task.id, "\">\n    <div class=\"row\">\n\n      <div class=\"taskTitle col-lg-4 order-1 col-sm\">\n          <p class=\"text-left d-inline\">\n            <span class=\"h6 font-weight-bold\">").concat(task.title, "</span> \n          \n            <a href=\"#task").concat(task.id, "Description\" class=\"text-primary ml-1 pl-0 small\" data-toggle=\"collapse\" data-target=\"#task").concat(task.id, "Description\"><i class=\"fas fa-plus-circle fa-lg iconFloat\"></i></a>\n          </p>\n      </div>\n      \n      <div class=\"col-lg-8 order-2\">\n        <ul class=\"row taskSummary\">\n\n          <li class=\"order-3 col-sm col-md\">\n            <span class=\"spanDateTime\">").concat(task.date, "</span>\n          </li>\n\n          <li class=\"order-4 col-sm col-md\">\n            <span>").concat(task.time, "</span>\n          </li>\n        \n          <li class=\"order-5 col-sm col-md\">\n            <span class=\"badge badgeColor").concat(task.status, "\">").concat(task.status, "</span>\n          </li>\n        \n          <li class=\"order-6 col-sm col-md\">\n          ").concat(task.assignedTo, "\n          </li>\n        \n          <li class=\"order-7 col-sm col-md\">\n            <form class=\"removeBin\" action=\"\" method=\"post\">\n              <a href=\"#newTaskInput\" id=\"editTaskButton\" role=button class=\"d-inline btn btn-link ml-0 pl-0 mb-0 pb-0\" data-toggle=\"modal\" title=\"Edit Task\" data-target=\"#newTaskInput\">\n              <i class=\"fas fa-pen-square text-dark iconFloat fa-lg\"></i></a>\n              <input type=\"checkbox\" class=\"ml-2 pl-0 border border-info\">\n              <button type=\"button\" class=\"ml-3 pl-0 btn btn-link removeBin\" id=\"deleteSingleTask\" data-toggle=\"\" data-placement=\"top\" title=\"Delete This Task\"><i class=\"fas fa-trash-alt fa-lg iconFloat iconDelete \"></i>\n              </button>\n              </form>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <div id=\"task").concat(task.id, "Description\" class=\"collapse order-2 order-lg-2 order-md-2 order-sm-2\">\n          ").concat(task.description, "\n    </div>\n    <hr>\n  </div>");
+  var html = "\n  <div class=\"task\" id=\"task".concat(task.id, "\">\n    <div class=\"row\">\n      <div class=\"taskTitle col-lg-4 order-1 col-sm\">\n          <p class=\"text-left d-inline\">\n            <span class=\"h6 font-weight-bold\">").concat(task.title, "</span> \n          \n            <a href=\"#task").concat(task.id, "Description\" class=\"text-primary ml-1 pl-0 small\" data-toggle=\"collapse\" data-target=\"#task").concat(task.id, "Description\"><i class=\"fas fa-plus-circle fa-lg iconFloat\"></i></a>\n          </p>\n      </div>\n      \n      <div class=\"col-lg-8 order-2\">\n        <ul class=\"row taskSummary\">\n          <li class=\"order-3 col-sm col-md\">\n            <span class=\"spanDateTime\">").concat(task.date, "</span>\n          </li>\n          <li class=\"order-4 col-sm col-md\">\n            <span>").concat(task.time, "</span>\n          </li>\n        \n          <li class=\"order-5 col-sm col-md\">\n            <span class=\"badge badgeColor").concat(task.status, "\">").concat(task.status, "</span>\n          </li>\n        \n          <li class=\"order-6 col-sm col-md\">\n          ").concat(task.assignedTo, "\n          </li>\n        \n          <li class=\"order-7 col-sm col-md\">\n            <form class=\"removeBin\" action=\"\" method=\"post\">\n              <a href=\"#newTaskInput\" id=\"editTaskButton\" role=button class=\"d-inline btn btn-link ml-0 pl-0 mb-0 pb-0\" data-toggle=\"modal\" title=\"Edit Task\" data-target=\"#newTaskInput\">\n              <i class=\"fas fa-pen-square text-dark iconFloat fa-lg\"></i></a>\n              <input type=\"checkbox\" class=\"ml-2 pl-0 border border-info\">\n              <button type=\"button\" class=\"ml-3 pl-0 btn btn-link removeBin\" id=\"deleteSingleTask\" data-toggle=\"\" data-placement=\"top\" title=\"Delete This Task\"><i class=\"fas fa-trash-alt fa-lg iconFloat iconDelete \"></i>\n              </button>\n              </form>\n          </li>\n        </ul>\n      </div>\n    </div>\n    <div id=\"task").concat(task.id, "Description\" class=\"collapse order-2 order-lg-2 order-md-2 order-sm-2\">\n          ").concat(task.description, "\n    </div>\n    <hr>\n  </div>");
   var taskElement = document.createRange().createContextualFragment(html); // passing html fragment to the page
 
   var editTaskOnPage = taskElement.querySelector("#editTaskButton"); // assign Edit Task button to a variable
@@ -665,7 +764,7 @@ var year = d.getFullYear();
 var todayFullDate = todayDate + nth(todayDate) + " " + todayMonth + " " + year + " - Happy " + day + "!";
 document.querySelector("#todayDate").innerHTML = todayFullDate;
 refreshPage();
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./taskmanager.js":"taskmanager.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -693,7 +792,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57184" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63053" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
