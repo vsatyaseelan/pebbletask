@@ -269,6 +269,7 @@ function validationTaskForm(title, description, assignedTo, date, status){
 const counterTotalTask = document.querySelector("#counterTotalTask"); // assign All Tasks button to counterTotalTask
 const totalNumber = document.querySelector("#counterTotalTask > span"); // assign span inside All Task Counter to totalNumber
 counterTotalTask.addEventListener("click", getAllTask); // onclick of All Tasks button
+
 function getAllTask(){
   clearAll(); // clears innerHTML 
   taskManager.tasks.forEach(task => addTaskToPage(task)); // displays each task from the array
@@ -303,7 +304,9 @@ counterToDo.addEventListener("click", function(){ // onclick To Do button
 function filterTaskStatus(status){
   clearAll(); // clears innerHTML
   taskManager.tasks.forEach(function (task){ // display all task when passed parameter matches the status in the array
-    if (status === task.status){addTaskToPage(task)};
+    if (status === task.status){
+      addTaskToPage(task)
+    };
   });
 }
 
