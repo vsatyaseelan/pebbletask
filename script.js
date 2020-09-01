@@ -333,6 +333,11 @@ function clearAll(){
 
 function addTaskToPage(task){  // adds HTML element to the page
 
+  let formatdate;
+  let datearr;
+  datearr = task.date.split("-");
+  formatdate = `${datearr[2]}-${datearr[1]}-${datearr[0]}`;
+
   // assign all the HTML Element code to html
   const html = `
   <div class="task" id="task${task.id}">
@@ -348,7 +353,7 @@ function addTaskToPage(task){  // adds HTML element to the page
       <div class="col-lg-8 order-2">
         <ul class="row taskSummary">
           <li class="order-3 col-sm col-md">
-            <span class="spanDateTime">${task.date}</span>
+            <span class="spanDateTime">${formatdate}</span>
           </li>
           <li class="order-4 col-sm col-md">
             <span>${task.time}</span>
